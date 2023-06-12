@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-12T06:11:54.239Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="pFwnAUpJIutKHUEdlONS" version="21.3.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-12T06:13:24.757Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="OWfoN5_OvpkL_DN1PnYu" version="21.3.8" type="github">
   <diagram id="9M3qHXlabgps6SP91BO-" name="Page-1">
     <mxGraphModel dx="1418" dy="1916" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -289,6 +289,18 @@
         </mxCell>
         <mxCell id="Lj1lpvWH2KxcPksHcl4Z-19" value="항목 입력" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="850" y="230" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj1lpvWH2KxcPksHcl4Z-20" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="956" y="220" as="sourcePoint" />
+            <mxPoint x="1016" y="160" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Lj1lpvWH2KxcPksHcl4Z-21" value="입력항목" style="swimlane;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;startSize=23;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="40" width="170" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj1lpvWH2KxcPksHcl4Z-22" value="&lt;ul&gt;&lt;li&gt;Pick명&lt;/li&gt;&lt;li&gt;선호브랜드&lt;/li&gt;&lt;li&gt;상의, 하의, 신발 예산&lt;/li&gt;&lt;li&gt;연령대&lt;/li&gt;&lt;li&gt;선호스타일&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="Lj1lpvWH2KxcPksHcl4Z-21">
+          <mxGeometry x="-14" y="10" width="180" height="110" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
