@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-12T06:24:12.437Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="OCoJUpBFO7jEkJug_xeU" version="21.3.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-12T06:27:06.056Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36" etag="d07rmFPbqt75XHHsZtkV" version="21.3.8" type="github">
   <diagram id="9M3qHXlabgps6SP91BO-" name="Page-1">
     <mxGraphModel dx="1418" dy="1916" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -203,6 +203,24 @@
         </mxCell>
         <mxCell id="Lj1lpvWH2KxcPksHcl4Z-36" value="DB&lt;br&gt;저장" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fontSize=11;" vertex="1" parent="1">
           <mxGeometry x="1050" y="413" width="60" height="77" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj1lpvWH2KxcPksHcl4Z-37" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.375;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;exitPerimeter=0;" edge="1" parent="1" target="Lj1lpvWH2KxcPksHcl4Z-38">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="980" y="249.5" as="sourcePoint" />
+            <mxPoint x="1100" y="249.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Lj1lpvWH2KxcPksHcl4Z-38" value="상의/하의/신발&lt;br&gt;예산 조정" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1078" y="230" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj1lpvWH2KxcPksHcl4Z-39" value="총 합산 예산&lt;br&gt;자동 계산" style="whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1270" y="220" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj1lpvWH2KxcPksHcl4Z-40" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="Lj1lpvWH2KxcPksHcl4Z-38" target="Lj1lpvWH2KxcPksHcl4Z-39">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="990" y="299" as="sourcePoint" />
+            <mxPoint x="1088" y="299.5" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
