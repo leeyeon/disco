@@ -1,10 +1,10 @@
-<mxfile host="app.diagrams.net" modified="2023-06-12T06:08:21.667Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="S_UwTCwNFOoHOXwMz_CV" version="21.3.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-12T06:28:32.564Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="dfpPnMeJMjfYQSlycYm7" version="21.3.8" type="github">
   <diagram id="C5RBs43oDa-KdzZeNtuy" name="Page-1">
     <mxGraphModel dx="1877" dy="1786" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-0" />
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-1" parent="WIyWlLk6GJQsqaUBKTNV-0" />
-        <mxCell id="WIyWlLk6GJQsqaUBKTNV-2" value="" style="rounded=0;html=1;jettySize=auto;orthogonalLoop=1;fontSize=11;endArrow=block;endFill=0;endSize=8;strokeWidth=1;shadow=0;labelBackgroundColor=none;edgeStyle=orthogonalEdgeStyle;" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" target="WIyWlLk6GJQsqaUBKTNV-6" edge="1">
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-37" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="WIyWlLk6GJQsqaUBKTNV-3" target="WIyWlLk6GJQsqaUBKTNV-6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="WIyWlLk6GJQsqaUBKTNV-3" value="&#39;DISCO&#39; 아이콘 조회" style="rounded=1;whiteSpace=wrap;html=1;fontSize=12;glass=0;strokeWidth=1;shadow=0;" parent="WIyWlLk6GJQsqaUBKTNV-1" vertex="1">
@@ -25,29 +25,77 @@
         <mxCell id="14-KaN4mjIjUp0y37_WZ-0" value="쇼핑몰 메인화면" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="160" y="-10" width="120" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-3" target="14-KaN4mjIjUp0y37_WZ-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="14-KaN4mjIjUp0y37_WZ-3" value="(+) 버튼 &amp;amp; 하단 문구 표출&lt;br&gt;&#39;나의 첫번째 PICK을 등록해주세요.&#39;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="-110" y="170" width="200" height="60" as="geometry" />
+          <mxGeometry x="-100" y="170" width="200" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="14-KaN4mjIjUp0y37_WZ-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-5" target="14-KaN4mjIjUp0y37_WZ-12">
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-25" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-5" target="14-KaN4mjIjUp0y37_WZ-24">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="14-KaN4mjIjUp0y37_WZ-5" value="등록순, 리스트 조회 (PICK 제목)&lt;br&gt;각각 PICK 오른쪽 상단 [삭제] 버튼" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-32" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-5" target="14-KaN4mjIjUp0y37_WZ-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-5" target="14-KaN4mjIjUp0y37_WZ-40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="330" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-5" value="등록순, 리스트 조회 (PICK 제목)&lt;br&gt;각각 PICK 오른쪽 상단 [삭제] 버튼&lt;br&gt;최하단 (+) 버튼" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
           <mxGeometry x="120" y="280" width="200" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="14-KaN4mjIjUp0y37_WZ-15" value="클릭" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-12" target="14-KaN4mjIjUp0y37_WZ-14">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="14-KaN4mjIjUp0y37_WZ-12" value="[삭제] 버튼 클릭" style="rhombus;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="360" y="270" width="110" height="80" as="geometry" />
         </mxCell>
         <mxCell id="14-KaN4mjIjUp0y37_WZ-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-14" target="14-KaN4mjIjUp0y37_WZ-16">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="14-KaN4mjIjUp0y37_WZ-14" value="PICK 삭제" style="rounded=0;whiteSpace=wrap;html=1;direction=west;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="530" y="280" width="80" height="60" as="geometry" />
+          <mxGeometry x="520" y="375" width="80" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="14-KaN4mjIjUp0y37_WZ-16" value="PICK" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
-          <mxGeometry x="630" y="270" width="60" height="80" as="geometry" />
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-16" value="delete&lt;br&gt;PICK" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="629" y="370" width="60" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-26" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-5" target="14-KaN4mjIjUp0y37_WZ-24">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220" y="340" as="sourcePoint" />
+            <mxPoint x="220" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-35" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-24" target="14-KaN4mjIjUp0y37_WZ-34">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-24" value="등록된 PICK 조회" style="ellipse;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="150" y="380" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-36" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-28" target="14-KaN4mjIjUp0y37_WZ-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-28" value="(+) 버튼 클릭" style="ellipse;whiteSpace=wrap;html=1;rounded=0;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-60" y="285" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-33" value="PICK 등록 화면" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="-60" y="480" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-34" value="PICK 추천 결과 화면" style="shape=document;whiteSpace=wrap;html=1;boundedLbl=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="160" y="480" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-38" target="14-KaN4mjIjUp0y37_WZ-5">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="420" y="300" />
+              <mxPoint x="320" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-38" value="select&lt;br&gt;PICK" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="390" y="160" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-41" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="WIyWlLk6GJQsqaUBKTNV-1" source="14-KaN4mjIjUp0y37_WZ-40" target="14-KaN4mjIjUp0y37_WZ-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="14-KaN4mjIjUp0y37_WZ-40" value="[삭제] 버튼 클릭" style="ellipse;whiteSpace=wrap;html=1;" vertex="1" parent="WIyWlLk6GJQsqaUBKTNV-1">
+          <mxGeometry x="350" y="380" width="120" height="50" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
