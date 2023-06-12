@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-12T05:49:36.278Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="LHZX559iiZOOHJ0rrBtS" version="21.3.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-12T05:53:34.574Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="mjpj1PQcemd71XEGmYgG" version="21.3.8" type="github">
   <diagram id="9M3qHXlabgps6SP91BO-" name="Page-1">
     <mxGraphModel dx="954" dy="513" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -13,7 +13,7 @@
         <mxCell id="fzmjyrFyGPUT9gfRvAtI-9" value="My Pick 모달창" style="ellipse;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" width="120" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="fzmjyrFyGPUT9gfRvAtI-10" value="" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="fzmjyrFyGPUT9gfRvAtI-10" value="리스트 중 선택하여 &lt;br&gt;모달이동" style="rounded=1;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="80" width="120" height="40" as="geometry" />
         </mxCell>
         <mxCell id="fzmjyrFyGPUT9gfRvAtI-12" value="" style="endArrow=classic;html=1;rounded=0;" parent="1" edge="1">
