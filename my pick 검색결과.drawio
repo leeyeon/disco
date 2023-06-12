@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-06-12T05:53:34.574Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="mjpj1PQcemd71XEGmYgG" version="21.3.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-06-12T05:54:32.298Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36" etag="uJQTEXMnZiUIpUK0xS3Q" version="21.3.8" type="github">
   <diagram id="9M3qHXlabgps6SP91BO-" name="Page-1">
     <mxGraphModel dx="954" dy="513" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -28,13 +28,13 @@
         <mxCell id="-nON0nGgF-exj52aO8rV-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="-nON0nGgF-exj52aO8rV-3" target="-nON0nGgF-exj52aO8rV-8" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-nON0nGgF-exj52aO8rV-3" value="My pick&amp;nbsp;" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="-nON0nGgF-exj52aO8rV-3" value="My pick 검색결과 &lt;br&gt;모달 창" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="160" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="-nON0nGgF-exj52aO8rV-62" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;" parent="1" source="-nON0nGgF-exj52aO8rV-5" target="-nON0nGgF-exj52aO8rV-61" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="-nON0nGgF-exj52aO8rV-5" value="없다." style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
+        <mxCell id="-nON0nGgF-exj52aO8rV-5" value="모달 창 닫힘" style="whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="560" y="170" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="-nON0nGgF-exj52aO8rV-126" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=11;" parent="1" source="-nON0nGgF-exj52aO8rV-8" target="-nON0nGgF-exj52aO8rV-119" edge="1">
@@ -302,6 +302,9 @@
         </mxCell>
         <mxCell id="-nON0nGgF-exj52aO8rV-125" value="오늘 생성 된 커리큘럼 아님" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=11;" parent="1" vertex="1">
           <mxGeometry x="220" y="360" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="x7vTHqNeUZqv8BDmo5PR-1" value="닫기버튼" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="475" y="178" width="70" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
