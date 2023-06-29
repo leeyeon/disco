@@ -21,11 +21,19 @@ public class FrontController {
     DiscoService discoService;
 
     @GetMapping("/index")
-    public String main() {
+    public String index() {
 
         log.debug("this is index page");
 
         return "index";
+    }
+
+    @GetMapping("/main")
+    public String main() {
+
+        log.debug("this is index page");
+
+        return "main";
     }
 
 }
