@@ -8,13 +8,13 @@ spring:
     view:
       prefix: /WEB-INF/views/
       suffix: .jsp
-jpa:
-  database-platform: org.hibernate.dialect.PostgreSQL10Dialect
-  show-sql: true
-  properties:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
     hibernate:
       format_sql: true
-  hibernate:
-    format_sql: true
-    ddl-auto: create
+      ddl-auto: create
 

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,8 +16,8 @@ import javax.persistence.Table;
 @Entity
 @Builder
 @Table(name = "PICK")
-public class PickDto {
-    @Id
+public class PickDTO {
+    @Id @GeneratedValue
     private String pickCd; // 픽ID
     private String topAmt; // 상의 예산 금액
     private String bottomAmt; // 하의 예산 금액
