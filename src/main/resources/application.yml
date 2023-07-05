@@ -4,6 +4,8 @@ spring:
     username: disco
     password: disco123
     platform: postgres
+    driver-class-name: org.postgresql.Driver
+    initialization-mode: always #init data.sql
   mvc:
     view:
       prefix: /WEB-INF/views/
@@ -17,4 +19,4 @@ spring:
     hibernate:
       format_sql: true
       ddl-auto: create
-
+    defer-datasource-initialization: true #hibernate 가 테이블을 생성한 이후 sql 실행하기 위함

@@ -1,5 +1,6 @@
 package com.startup.disco.controller;
 
+import com.startup.disco.model.PickDTO;
 import com.startup.disco.model.ProductDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
@@ -7,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,9 +31,11 @@ public class FrontController {
     }
 
     @GetMapping("/main")
-    public String main() {
+    public String main(Model model) {
+        List<PickDTO> pickDTOList = discoService.allSelectPick("USER1");
 
-        log.debug("this is index page");
+        model.addAttribute("pickDTOList", pickDTOList);
+        model.addAttribute("msg", "나오낭");
 
         return "main";
     }

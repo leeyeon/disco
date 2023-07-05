@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ page  isELIgnored="false" language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
-
-
 
 <head>
 
@@ -89,26 +88,31 @@
 
                                     <hr>
 
-                                    <div class="row mb-2">
-                                        <div class="col-xl-12 col-md-12">
-                                            <div class="card border-left-warning shadow h-100">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters align-items-center">
-                                                        <div class="col mr-2">
-                                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                여성, ~30,000원, 30대, 캐쥬얼/심플</div>
-                                                            <div class="h5 mb-0 font-weight-bold text-gray-800">30만원대 캐쥬얼룩</div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <a href="#" class="btn btn-danger btn-circle">
-                                                                <i class="fas fa-trash"></i>
-                                                            </a>
+                                    <!-- [S] 사용자별 PICK 목록 -->
+                                    <c:forEach var="pick" items="${pickDTOList}">
+                                        <div class="row mb-2">
+                                            <div class="col-xl-12 col-md-12">
+                                                <div class="card border-left-warning shadow h-100">
+                                                    <div class="card-body">
+                                                        <div class="row no-gutters align-items-center">
+                                                            <div class="col mr-2">
+                                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                    ${pick.sexNm}, ${pick.totalAmt}, ${pick.style}</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
+                                                            </div>
+                                                            <div class="col-auto">
+                                                                <a href="#" class="btn btn-danger btn-circle">
+                                                                    <i class="fas fa-trash"></i>
+                                                                </a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </c:forEach>
+
+                                    <!-- [E] 사용자별 PICK 목록 -->
 
                                     <div class="row">
                                         <div class="btn col-xl-12 col-md-12">
