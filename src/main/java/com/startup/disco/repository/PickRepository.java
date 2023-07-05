@@ -9,5 +9,6 @@ import java.util.List;
 public interface PickRepository extends JpaRepository<PickDTO, String> {
     List<PickDTO> findByPickCd(long pickCd);
 
+    void deleteByPickCd(long pickCd);
     List<PickDTO> findByUserIdAndDelFlag(String userId, String delFlag);
 }

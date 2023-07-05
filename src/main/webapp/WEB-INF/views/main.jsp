@@ -22,30 +22,74 @@
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
-    <style>
+    <script>
+    var MsgBox = {
+        /* Alert */
+        Alert: function(msg, okhandler) {
+            new Promise((resolve, reject) => {
+                $("#msg_popup #btn_confirm").hide();
+                $("#msg_popup #btn_alert").show();
 
-    /*popup*/
-    .popup_layer {position:fixed;top:0;left:0;z-index: 10000; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.4); }
-    /*팝업 박스*/
-    .popup_box{position: relative;top:50%;left:50%; overflow: auto; height: 600px; width:500px;transform:translate(-50%, -50%);z-index:1002;box-sizing:border-box;background:#fff;box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-webkit-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);-moz-box-shadow: 2px 5px 10px 0px rgba(0,0,0,0.35);}
-    /*컨텐츠 영역*/
-    .popup_box .popup_cont {padding:50px;line-height:1.4rem;font-size:14px; }
-    .popup_box .popup_cont h2 {padding:15px 0;color:#333;margin:0;}
-    .popup_box .popup_cont p{ border-top: 1px solid #666;padding-top: 30px;}
-    /*버튼영역*/
-    .popup_box .popup_btn {display:table;table-layout: fixed;width:100%;height:70px;background:#ECECEC;word-break: break-word;}
-    .popup_box .popup_btn a {position: relative; display: table-cell; height:70px;  font-size:17px;text-align:center;vertical-align:middle;text-decoration:none; background:#ECECEC;}
-    .popup_box .popup_btn a:before{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); -o-transform: rotate(-45deg); transform: rotate(-45deg);}
-    .popup_box .popup_btn a:after{content:'';display:block;position:absolute;top:26px;right:29px;width:1px;height:21px;background:#fff;-moz-transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transform: rotate(45deg);}
-    .popup_box .popup_btn a.close_day {background:#5d5d5d;}
-    .popup_box .popup_btn a.close_day:before, .popup_box .popup_btn a.close_day:after{display:none;}
-    /*오버레이 뒷배경*/
-    .popup_overlay{position:fixed;top:0px;right:0;left:0;bottom:0;z-index:1001;;background:rgba(0,0,0,0.5);}
-    /*popup*/
+                $("#msg_popup #alert_ok").unbind();
+                $("#msg_popup .modal-body").html(msg);
+                $('#msg_popup').modal('show');
 
-    </style>
+                $("#msg_popup #alert_ok").click(function() {
+                    $('#msg_popup').modal('hide');
+                });
+
+                $("#msg_popup").on("hidden.bs.modal", function(e) {
+                    e.stopPropagation();
+                    if(okhandler != null) resolve();
+                    else reject();
+                });
+            }).then(okhandler).catch(function() {});
+        },
+
+        /* Confirm */
+        Confirm: function(msg, yeshandler, nohandler) {
+            new Promise((resolve, reject) => {
+                var flag = false;
+                $("#msg_popup #btn_alert").hide();
+                $("#msg_popup #btn_confirm").show();
+
+                $("#msg_popup #confirm_yes").unbind();
+                $("#msg_popup #confirm_no").unbind();
+                $("#msg_popup .modal-body").html(msg);
+                $('#msg_popup').modal('show');
+
+                $('#msg_popup').on('keypress', function (e) {
+                    var keycode = (e.keyCode ? e.keyCode : e.which);
+                    if(keycode == '13') {
+                        flag = true;
+                        $('#msg_popup').modal('hide');
+                    }
+                });
+
+                $("#msg_popup #confirm_yes").click(function() {
+                    flag = true;
+                });
+                $("#msg_popup #confirm_no").click(function() {
+                    flag = false;
+                });
+
+                $("#msg_popup").on("hidden.bs.modal", function(e) {
+                    e.stopPropagation();
+                    if(yeshandler != null && flag == true) resolve(1);
+                    else if(nohandler != null && flag == false) resolve(2);
+                    else reject();
+                });
+
+            }).then(function(value) {
+                if(value == 1)      yeshandler();
+                else if(value == 2) nohandler();
+            }).catch(function() {});
+        },
+    }
+    </script>
 
 </head>
 
@@ -61,6 +105,13 @@
                 $("#add-card-module").toggle();
             });
         });
+
+        function delPick(pickCd, pickNm) {
+            MsgBox.Confirm(pickNm + "을 삭제하시겠습니까?"
+                    , function() {
+                        //MsgBox.Alert(pickCd);
+                    });
+        }
     </script>
 
     <div class="container">
@@ -90,17 +141,18 @@
 
                                     <!-- [S] 사용자별 PICK 목록 -->
                                     <c:forEach var="pick" items="${pickDTOList}">
-                                        <div class="row mb-2">
+                                        <div class="row mb-2" style="cursor: pointer;">
                                             <div class="col-xl-12 col-md-12">
                                                 <div class="card border-left-warning shadow h-100">
                                                     <div class="card-body">
                                                         <div class="row no-gutters align-items-center">
                                                             <div class="col mr-2">
                                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                    ${pick.sexNm}, ${pick.totalAmt}, ${pick.style}</div>
+                                                                    ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
+                                                                </div>
                                                                 <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
                                                             </div>
-                                                            <div class="col-auto">
+                                                            <div class="col-auto" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">
                                                                 <a href="#" class="btn btn-danger btn-circle">
                                                                     <i class="fas fa-trash"></i>
                                                                 </a>
@@ -167,6 +219,24 @@
               저장하기 삭제하기 버튼 있을 곳
           </div>
       </div>
+    </div>
+
+    <!-- Alert, Confirm Modal -->
+    <div class="modal" id="msg_popup" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <!-- MSG Space-->
+                </div>
+                <div class="modal-footer" id="btn_confirm">
+                    <button type="button" id="confirm_yes" class="btn btn-primary" data-dismiss="modal" >YES</button>
+                    <button type="button" id="confirm_no"class="btn btn-secondary" data-dismiss="modal">NO</button>
+                </div>
+                <div class="modal-footer" id="btn_alert">
+                    <button type="button" id="alert_ok"class="btn btn-primary" data-dismiss="modal" >OK</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Bootstrap core JavaScript-->

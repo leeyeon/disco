@@ -42,6 +42,11 @@ public class DiscoServiceImpl implements DiscoService {
     }
 
     @Override
+    public void deletePick(Long pickCd) {
+        pickRepository.deleteByPickCd(pickCd);
+    }
+
+    @Override
     public List<PickDTO> allSelectPick(String userId) throws BaseException {
         List<PickDTO> pickDTOList = pickRepository.findByUserIdAndDelFlag(userId, "N");
 

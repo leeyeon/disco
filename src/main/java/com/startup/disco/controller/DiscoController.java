@@ -37,6 +37,15 @@ public class DiscoController {
     public ResponseEntity<List<String>> allSelectProduct () throws Exception {
         return ResponseEntity.ok(discoService.allSelectProduct());
     }
-    
 
+    @ApiOperation(value = "Pick 삭제")
+    @PostMapping("/delete/pick")
+    public ResponseEntity<String> deletePick(Long pickCd) throws Exception {
+        if (ObjectUtils.isEmpty(pickCd)) {
+            throw new Exception("파라미터 오류");
+        }else{
+            discoService.deletePick(pickCd);
+            return ResponseEntity.ok("Pick이 삭제되었습니다.");
+        }
+    }
 }
