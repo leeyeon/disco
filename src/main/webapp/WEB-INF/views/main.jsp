@@ -108,10 +108,27 @@
 
         function delPick(pickCd, pickNm) {
             MsgBox.Confirm(pickNm + "을 삭제하시겠습니까?"
-                    , function() {
-                        //MsgBox.Alert(pickCd);
+                , function() {
+                    $.ajax({
+                        type : "POST",
+                        url : "/delete/pick",
+                        data : {"pickCd" : pickCd},
+                        success : function(res){
+                            alert(res);
+                            $("#pick"+pickCd).remove();
+                        },
+                        error : function(XMLHttpRequest, textStatus, errorThrown){
+                            alert("통신 실패.");
+                        }
                     });
+                });
         }
+        function showPick(pickCd) {
+            alert("GPT 호출 및 결과 DIV 보여주기");
+        }
+
+        showPick
+
     </script>
 
     <div class="container">
@@ -135,18 +152,26 @@
                                 <div class="p-5" style="height: 600px; overflow-y: scroll;">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">MY PICK</h1>
+                                        <div class="h6 text-gray-600 text-xs">
+                                            'PICK' 하시면 고객님 취향저격 상품을 추천해드려요♥
+                                        </div>
                                     </div>
 
                                     <hr>
 
                                     <!-- [S] 사용자별 PICK 목록 -->
-                                    <c:forEach var="pick" items="${pickDTOList}">
-                                        <div class="row mb-2" style="cursor: pointer;">
+                                    <c:forEach var="pick" items="${pickDTOList}" varStatus="status">
+                                        <div class="row mb-2" id="pick${pick.pickCd}">
                                             <div class="col-xl-12 col-md-12">
-                                                <div class="card border-left-warning shadow h-100">
+                                                <c:if test="${status.index % 2 eq 0}">
+                                                    <div class="card border-left-warning shadow h-100">
+                                                </c:if>
+                                                <c:if test="${status.index % 2 eq 1}">
+                                                    <div class="card border-left-dark shadow h-100">
+                                                </c:if>
                                                     <div class="card-body">
                                                         <div class="row no-gutters align-items-center">
-                                                            <div class="col mr-2">
+                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}')">
                                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                                     ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
                                                                 </div>
@@ -229,8 +254,12 @@
                     <!-- MSG Space-->
                 </div>
                 <div class="modal-footer" id="btn_confirm">
-                    <button type="button" id="confirm_yes" class="btn btn-primary" data-dismiss="modal" >YES</button>
-                    <button type="button" id="confirm_no"class="btn btn-secondary" data-dismiss="modal">NO</button>
+                    <button type="button" id="confirm_yes" class="btn btn-Light col mr-2" data-dismiss="modal">
+                        네, 필요없어요.
+                    </button>
+                    <button type="button" id="confirm_no" class="btn btn-secondary col mr-2" data-dismiss="modal">
+                        아니요! 더 추천받을래요.
+                    </button>
                 </div>
                 <div class="modal-footer" id="btn_alert">
                     <button type="button" id="alert_ok"class="btn btn-primary" data-dismiss="modal" >OK</button>

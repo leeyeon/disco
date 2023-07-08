@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +43,10 @@ public class DiscoServiceImpl implements DiscoService {
     }
 
     @Override
+    @Transactional
     public void deletePick(Long pickCd) {
-        pickRepository.deleteByPickCd(pickCd);
+        PickDTO pick = pickRepository.findByPickCd(pickCd);
+        pick.setDelFlag("Y");
     }
 
     @Override

@@ -49,7 +49,7 @@ public class DiscoController {
             throw new Exception("파라미터 오류");
         }else{
             discoService.deletePick(pickCd);
-            return ResponseEntity.ok("Pick이 삭제되었습니다.");
+            return ResponseEntity.ok("PICK이 삭제되었습니다.");
         }
     }
 
