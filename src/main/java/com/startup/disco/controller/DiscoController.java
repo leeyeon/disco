@@ -1,5 +1,6 @@
 package com.startup.disco.controller;
 
+import com.startup.disco.delegate.OpenAIApiDelegate;
 import com.startup.disco.model.ProductDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
@@ -9,17 +10,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
 public class DiscoController {
+    @Autowired
+    OpenAIApiDelegate openAIApiDelegate;
 
     @Autowired
     DiscoService discoService;
-    
 
     @ApiOperation(value = "상품 추가")
     @PostMapping("/insert/product")
@@ -47,5 +51,15 @@ public class DiscoController {
             discoService.deletePick(pickCd);
             return ResponseEntity.ok("Pick이 삭제되었습니다.");
         }
+    }
+
+    @GetMapping("/openai/create-completion")
+    public String test(@RequestParam(value = "message", required = true) String message) {
+        return openAIApiDelegate.createCompletions(message)
+                .getChoices()
+                .stream()
+                .map(choice ->
+                    choice.getMessage().getContent()
+                ).collect(Collectors.joining("\n"));
     }
 }

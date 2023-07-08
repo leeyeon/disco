@@ -20,3 +20,9 @@ spring:
       format_sql: true
       ddl-auto: create
     defer-datasource-initialization: true #hibernate 가 테이블을 생성한 이후 sql 실행하기 위함
+
+# openAi
+openai:
+  api:
+    key: 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
+    url:  https://api.openai.com/v1/chat/completions #https://api.openai.com/v1/embeddings
