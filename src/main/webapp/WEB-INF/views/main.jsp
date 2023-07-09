@@ -123,22 +123,25 @@
                     });
                 });
         }
-        function showPick(pickCd) {
-            MsgBox.Confirm("선택하신 ["+ pickNm + "] 를/을 상품 추천을 받아보시겠어요?"
-                            , function() {
-                                $.ajax({
-                                    type : "POST",
-                                    url : "/delete/pick",
-                                    data : {"pickCd" : pickCd},
-                                    success : function(res){
-                                        alert(res);
-                                        $("#pick"+pickCd).remove();
-                                    },
-                                    error : function(XMLHttpRequest, textStatus, errorThrown){
-                                        alert("통신 실패.");
-                                    }
-                                });
-                            });
+
+        function showPick(pickCd, pickNm) {
+            if (confirm("선택하신 [" + pickNm + "] 를/을 상품 추천을 받아보시겠어요?")) {
+                $.ajax({
+                    type: "POST",
+                    url: "/recommandGPT/pick",
+                    data: {
+                        "pickCd": pickCd
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        var jsonStr = JSON.stringify(data);
+                        var newWindow = window.open("", "_blank");
+                        newWindow.document.write("<pre>" + jsonStr + "</pre>");
+                    }
+                });
+            } else {
+                alert("취소하였습니다");
+            }
         }
 
     </script>
@@ -183,11 +186,11 @@
                                                 </c:if>
                                                     <div class="card-body">
                                                         <div class="row no-gutters align-items-center">
-                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}')">
+                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.pickNm}');">
                                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                                     ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
                                                                 </div>
-                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">${pick.pickNm}</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
                                                             </div>
                                                             <div class="col-auto" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">
                                                                 <a href="#" class="btn btn-danger btn-circle">
