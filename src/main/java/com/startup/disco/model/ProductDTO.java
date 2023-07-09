@@ -17,8 +17,10 @@ import javax.persistence.Table;
 @Table(name = "PRODUCT")
 public class ProductDTO {
     @Id
-    private String productCd; // 품번
+    private String productCd; // 상품코드
     private String productName; // 상품명
     private String amt; // 상품금액
     private String brndCd; // 브랜드코드
+    private String brndNm; // 브랜드명
+    private String price; // 가격
 }
