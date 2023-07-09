@@ -12,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>DISCO 구현 화면</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -107,7 +107,7 @@
         });
 
         function delPick(pickCd, pickNm) {
-            MsgBox.Confirm(pickNm + "을 삭제하시겠습니까?"
+            MsgBox.Confirm("선택하신 ["+ pickNm + "] 를/을 삭제하시겠습니까?"
                 , function() {
                     $.ajax({
                         type : "POST",
@@ -124,10 +124,22 @@
                 });
         }
         function showPick(pickCd) {
-            alert("GPT 호출 및 결과 DIV 보여주기");
+            MsgBox.Confirm("선택하신 ["+ pickNm + "] 를/을 상품 추천을 받아보시겠어요?"
+                            , function() {
+                                $.ajax({
+                                    type : "POST",
+                                    url : "/delete/pick",
+                                    data : {"pickCd" : pickCd},
+                                    success : function(res){
+                                        alert(res);
+                                        $("#pick"+pickCd).remove();
+                                    },
+                                    error : function(XMLHttpRequest, textStatus, errorThrown){
+                                        alert("통신 실패.");
+                                    }
+                                });
+                            });
         }
-
-        showPick
 
     </script>
 
@@ -175,7 +187,7 @@
                                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                                     ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
                                                                 </div>
-                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
+                                                                <div class="h5 mb-0 font-weight-bold text-gray-800" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">${pick.pickNm}</div>
                                                             </div>
                                                             <div class="col-auto" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">
                                                                 <a href="#" class="btn btn-danger btn-circle">

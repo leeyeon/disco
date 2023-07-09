@@ -8,10 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,9 +35,12 @@ public class DiscoController {
     }
 
     @ApiOperation(value = "상품 조회")
-    @GetMapping("/all/select/product")
-    public ResponseEntity<List<String>> allSelectProduct () throws Exception {
-        return ResponseEntity.ok(discoService.allSelectProduct());
+    @GetMapping("/select/product/{productCd}")
+    public ResponseEntity<List<String>> selectProduct (@PathVariable String productCd) throws Exception {
+        if(StringUtils.isEmpty(productCd)){
+            throw new Exception("GPT productCd 없음");
+        }
+        return ResponseEntity.ok(discoService.selectByProductCd(productCd));
     }
 
     @ApiOperation(value = "Pick 삭제")

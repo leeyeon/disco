@@ -11,7 +11,7 @@ public interface DiscoService {
     /* 상품 관련 서비스 */
     void insertProduct(ProductDTO productDTO);
 
-    List<String> allSelectProduct() throws BaseException;
+    List<String> selectByProductCd(String productCd) throws BaseException;
 
     /* 픽 관련 서비스 */
     void deletePick(Long pickCd);

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,17 +30,17 @@ public class DiscoServiceImpl implements DiscoService {
     }
 
     @Override
-    public List<String> allSelectProduct () throws BaseException {
-        List<String> productNameList = new ArrayList<>();
-        List<ProductDTO> productDTOList =  productRepository.findAll();
-        if (productDTOList.isEmpty()) {
-            throw new BaseException("데이터 없음");
-        }else {
-            for (ProductDTO productDTO : productDTOList) {
-                productNameList.add(productDTO.getProductName());
-            }
-            return productNameList;
+    public List<String> selectByProductCd(String productCd) throws BaseException {
+        List<String> resultList = new ArrayList<>();
+        List<ProductDTO> productList = Optional.ofNullable(productRepository.findByProductCd(productCd)).orElse(new ArrayList<>());
+        if (productList.isEmpty()) {
+            throw new BaseException("해당 코드로 된 상품 없음");
         }
+        for (ProductDTO productDTO : productList) {
+            resultList.add(productDTO.getProductName());
+            resultList.add(productDTO.getPrice());
+        }
+        return resultList;
     }
 
     @Override
