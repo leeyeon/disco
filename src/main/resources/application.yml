@@ -26,3 +26,6 @@ openai:
   api:
     key: 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
     url:  https://api.openai.com/v1/chat/completions #https://api.openai.com/v1/embeddings
+  admin:
+    url: http://127.0.0.1:8000/recommend-product # openAi 파이썬 서버 요청 URL
+

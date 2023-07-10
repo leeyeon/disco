@@ -18,7 +18,6 @@ public class GptResponse {
     private String object;
     private Date created;
 
-
     private String model;
     private List<Choice> choices;
 

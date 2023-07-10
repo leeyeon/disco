@@ -44,6 +44,11 @@ public class DiscoServiceImpl implements DiscoService {
     }
 
     @Override
+    public PickDTO selectPick(Long pickCd) {
+        return pickRepository.findByPickCd(pickCd);
+    }
+
+    @Override
     @Transactional
     public void deletePick(Long pickCd) {
         PickDTO pick = pickRepository.findByPickCd(pickCd);

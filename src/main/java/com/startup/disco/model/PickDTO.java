@@ -46,4 +46,5 @@ public class PickDTO {
     public int getTotalAmt() {
         return topAmt + bottomAmt + shoesAmt;
     }
+
 }

@@ -1,6 +1,7 @@
 package com.startup.disco.controller;
 
 import com.startup.disco.delegate.OpenAIApiDelegate;
+import com.startup.disco.model.PickDTO;
 import com.startup.disco.model.ProductDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
@@ -63,4 +64,14 @@ public class DiscoController {
                     choice.getMessage().getContent()
                 ).collect(Collectors.joining("\n"));
     }
+
+    @GetMapping("/openai/create-recommend-product")
+    public ProductDTO test2(@RequestParam(value = "pickCd", required = true) long pickCd) {
+
+        PickDTO pickDTO = discoService.selectPick(pickCd);
+
+        return openAIApiDelegate.createRecommend(pickDTO);
+    }
+
+
 }
