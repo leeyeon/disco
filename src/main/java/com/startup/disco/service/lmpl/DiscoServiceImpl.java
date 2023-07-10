@@ -65,4 +65,11 @@ public class DiscoServiceImpl implements DiscoService {
             return pickDTOList;
         }
     }
+
+    public void insertPick (String pickNm){
+        System.out.println("~~~~ServiceImpl 들어옴 ! "+pickNm);
+        PickDTO pickDto = new PickDTO();
+        pickDto.setPickNm(pickNm);
+        PickDTO save = pickRepository.save(pickDto);
+    }
 }

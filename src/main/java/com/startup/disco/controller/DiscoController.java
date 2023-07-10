@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -65,13 +66,26 @@ public class DiscoController {
                 ).collect(Collectors.joining("\n"));
     }
 
+    @ApiOperation(value = "OPENAI 상품추천 결과")
     @GetMapping("/openai/create-recommend-product")
-    public ProductDTO test2(@RequestParam(value = "pickCd", required = true) long pickCd) {
-
+    public ProductDTO createRecommendProduct(@RequestParam(value = "pickCd", required = true) long pickCd) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
-
         return openAIApiDelegate.createRecommend(pickDTO);
     }
 
+
+    @ApiOperation(value = "gpt 임시 api")
+    @PostMapping("/recommandGPT/pick")
+    public String recommandGPT(String pickCd, Model model) {
+        // JSON 데이터 생성
+        return  "{\n" +
+                "        \"productCd\" : \"2152090539\",\n" +
+                "        \"productName\" : \"[톰보이] 숏 리버시블 무스탕\",\n" +
+                "        \"brndCd\" : \"002331\",\n" +
+                "        \"brndNm\" : \"톰보이(백화점)\",\n" +
+                "        \"price\" : \"119700\",\n" +
+                "        \"division\" : \"상의\"\n" +
+                "    }";
+    }
 
 }
