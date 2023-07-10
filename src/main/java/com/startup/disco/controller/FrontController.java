@@ -44,10 +44,6 @@ public class FrontController {
     @ApiOperation(value = "pick 추가")
     @PostMapping("pick.do")
     public String insertPick(@RequestParam String pickNm) {
-        //Long strPickCd = Long.valueOf("001");
-        Long strPickCd = 001L;
-        //PickDTO pickDTO = new PickDTO();
-
         //pickDTO.setPickNm(pickNm);
         System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+pickNm);
         discoService.insertPick(pickNm);

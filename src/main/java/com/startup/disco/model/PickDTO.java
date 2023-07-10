@@ -12,9 +12,15 @@ import javax.persistence.*;
 @Data
 @Entity
 @Builder
+@SequenceGenerator(
+        name = "pickCd",
+        sequenceName = "pickCd_sequence",
+        initialValue = 3,
+        allocationSize = 1
+)
 @Table(name = "PICK")
 public class PickDTO {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "pickCd")
     private long pickCd; // 픽ID
 
     private String userId; // 사용자id
