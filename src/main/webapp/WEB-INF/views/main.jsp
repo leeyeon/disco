@@ -104,6 +104,10 @@
             $("#addCard").on("click", function() {
                 $("#add-card-module").toggle();
             });
+
+            $("#popupClose").on("click", function() {
+                $("#add-card-module").hide();
+            });
         });
 
         function delPick(pickCd, pickNm) {
@@ -144,7 +148,26 @@
             }
         }
 
-    </script>
+        function savePick() {
+            var pickNm = $('#pickNm').val();
+            console.log(pickNm);
+        }
+
+         function getTotalsSum() {
+             var sum2 = parseInt(0);
+             var topWearAmt = $("#topWear").val();
+             var bottomAmt = $("#bottom").val();
+             var shoseAmt = $("#shose").val();
+
+             console.log(topWearAmt);
+             console.log(bottomAmt);
+             console.log(shoseAmt);
+
+             sum2 = Number(topWearAmt) + Number(bottomAmt) + Number(shoseAmt);
+             console.log(sum2);
+             $("#totalSum").val(sum2);
+         }
+     </script>
 
     <div class="container">
 
@@ -235,30 +258,38 @@
     <div class="popup_layer" id="add-card-module" style="display: none;">
 
 
-      <div class="popup_box">
-          <div style="height: 10px; width: 375px; float: top;">
+          <div class="popup_box" style="height: 800px;">
+              <div style="height: 20px; width: 375px; float: top;">
+              </div>
+              <!--팝업 컨텐츠 영역-->
+              <form action="pick.do" method="POST">
+              <div class="popup_cont">
+                  <button id="popupClose" type="button" class="fa fa-times" style="float: right;"></button>
+                  <h5> My PICK ! </h5>
+                      <label for="pickNm">Pick 명</label>  <input type="text" name="pickNm" id="pickNm" /><br/>
+                      <label for="favBrnd">선호브랜드</label>  <input type="text" name="favBrand" id="favBrnd" /><br/>
+                      <h5> 항목별 예산설정 </h5>
+                      <label for="lblTop">상의</label>  <input type="text" name="topWear" id="topWear" onkeyup="getTotalsSum();" /><br/>
+                      <label for="lblBottom">하의</label>  <input type="text" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
+                      <label for="lblShose">신발</label>  <input type="text" name="shose" id="shose"  onkeyup="getTotalsSum();" /><br/>
+                  <h5> 총 <input type="text" name="totalSum" id="totalSum" /> 원 </h5>
+                  <label for="age">성별</label>  <input type="radio" name="gender" id="men" value="men" text="남성" checked /> 남성
+                                                  <input type="radio" name="gender" id="women" value="women" text="여성" /> 여성<br/>
+                  <label for="style">선호 스타일</label>  <input type="text" name="favStyle" id="favStyle" /><br/>
+              </div>
+              <!--팝업 버튼 영역-->
+              <div class="popup_bottom" style="float: bottom; margin-top: 300px;">
+                  <!--<a href="#" id="pickSave" onClick="savePick();" class="btn btn-success btn-icon-split" style="width:100%;">-->
+                   <input type="submit" value="저장하기" class="btn btn-success btn-icon-split" style="width:100%;">
+                   <span class="icon text-white-50">
+                    <i class="fas fa-check">
+                    </i>
+                   </span>
+                  </a>
+              </div>
+              </form>
           </div>
-          <!--팝업 컨텐츠 영역-->
-          <div class="popup_cont">
-              <h5> POPUP TILTE</h5>
-              <p>
-              !!!!!!!!!!!!!!!!!!!!<br>
-                  ~~~~~~~~~~~~~~~~~
-                  @@@@@@@@@@@@@@@@@@@
-                  %%%%%%%%%%%%%%%%
-                  ^^^^^^^^^^^^^^^^
-                  &&&&&&&&&&&&&&
-                  *************
-                  ((((((((((((((((
 
-              </p>
-
-          </div>
-          <!--팝업 버튼 영역-->
-          <div class="popup_btn" style="float: bottom; margin-top: 250px;">
-              저장하기 삭제하기 버튼 있을 곳
-          </div>
-      </div>
     </div>
 
     <!-- Alert, Confirm Modal -->

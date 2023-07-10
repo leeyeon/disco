@@ -16,5 +16,6 @@ public interface DiscoService {
     /* 픽 관련 서비스 */
     void deletePick(Long pickCd);
     List<PickDTO> allSelectPick(String userId) throws BaseException;
+    void insertPick(String pickNm);
 
 }

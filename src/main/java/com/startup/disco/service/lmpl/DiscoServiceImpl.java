@@ -60,4 +60,9 @@ public class DiscoServiceImpl implements DiscoService {
             return pickDTOList;
         }
     }
+
+    public void insertPick (String pickNm){
+        //pickRepository.savePick(pickNm);
+        System.out.println("~~~~ServiceImpl 들어옴 ! "+pickNm);
+    }
 }

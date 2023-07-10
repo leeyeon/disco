@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,6 +37,23 @@ public class FrontController {
 
         model.addAttribute("pickDTOList", pickDTOList);
         model.addAttribute("msg", "나오낭");
+
+        return "main";
+    }
+
+    @ApiOperation(value = "pick 추가")
+    @PostMapping("pick.do")
+    public String insertPick(@RequestParam String pickNm) {
+        //Long strPickCd = Long.valueOf("001");
+        Long strPickCd = 001L;
+        //PickDTO pickDTO = new PickDTO();
+
+        //pickDTO.setPickNm(pickNm);
+        System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+pickNm);
+        discoService.insertPick(pickNm);
+
+        //model.addAttribute("pickDTOList", pickDTOList);
+        //model.addAttribute("msg", "저장되낭");
 
         return "main";
     }
