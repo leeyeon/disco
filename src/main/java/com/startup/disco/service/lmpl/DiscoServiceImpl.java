@@ -25,8 +25,19 @@ public class DiscoServiceImpl implements DiscoService {
     private final PickRepository pickRepository;
 
     @Override
-    public void insertProduct (ProductDTO productDTO) {
-        productRepository.save(productDTO);
+    public void insertProduct (List<ProductDTO> productDTOList) {
+        for (ProductDTO gptRecm : productDTOList) {
+            ProductDTO productDTO = new ProductDTO();
+            productDTO.setProductCd(gptRecm.getProductCd());
+            productDTO.setBrndCd(gptRecm.getBrndCd());
+            productDTO.setBrndNm(gptRecm.getBrndNm());
+            productDTO.setDivision(gptRecm.getDivision());
+            productDTO.setPrice(gptRecm.getPrice());
+            productDTO.setProductName(gptRecm.getProductName());
+
+            productRepository.save(productDTO);
+
+        }
     }
 
     @Override
@@ -72,4 +83,15 @@ public class DiscoServiceImpl implements DiscoService {
         pickDto.setPickNm(pickNm);
         PickDTO save = pickRepository.save(pickDto);
     }
+
+    @Override
+    public List<ProductDTO> allProductList() throws BaseException {
+        List<ProductDTO> productDTOList = productRepository.findAll();
+
+        if (productDTOList.isEmpty()) {
+            throw new BaseException("데이터 없음");
+        }
+        return productDTOList;
+    }
+
 }

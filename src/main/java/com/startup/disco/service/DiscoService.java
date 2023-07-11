@@ -9,7 +9,7 @@ import java.util.List;
 public interface DiscoService {
 
     /* 상품 관련 서비스 */
-    void insertProduct(ProductDTO productDTO);
+    void insertProduct(List<ProductDTO> productDTO);
 
     List<String> selectByProductCd(String productCd) throws BaseException;
 
@@ -19,4 +19,5 @@ public interface DiscoService {
     List<PickDTO> allSelectPick(String userId) throws BaseException;
     void insertPick(String pickNm);
 
+    List<ProductDTO> allProductList() throws BaseException;
 }

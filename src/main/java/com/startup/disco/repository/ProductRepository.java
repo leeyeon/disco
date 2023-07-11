@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<ProductDTO, String> {
     List<ProductDTO> findByProductCd(String productCd);
+
+    List<ProductDTO> findAll();
 }

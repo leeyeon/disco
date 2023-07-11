@@ -54,4 +54,13 @@ public class FrontController {
         return "main";
     }
 
+    @GetMapping("/myPickResult")
+    public String myPickResult(Model model) {
+        List<ProductDTO> productDTOList = discoService.allProductList();
+
+        model.addAttribute("productDTOList", productDTOList);
+
+        return "myPickResult";
+    }
+
 }

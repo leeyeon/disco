@@ -136,11 +136,10 @@
                     data: {
                         "pickCd": pickCd
                     },
-                    dataType: "json",
                     success: function (data) {
-                        var jsonStr = JSON.stringify(data);
-                        var newWindow = window.open("", "_blank");
-                        newWindow.document.write("<pre>" + jsonStr + "</pre>");
+                    console.log(data);
+                        var newWindow = window.open("/myPickResult", "_blank");
+                        newWindow.data = data;
                     }
                 });
             } else {
@@ -158,10 +157,6 @@
              var topWearAmt = $("#topWear").val();
              var bottomAmt = $("#bottom").val();
              var shoseAmt = $("#shose").val();
-
-             console.log(topWearAmt);
-             console.log(bottomAmt);
-             console.log(shoseAmt);
 
              sum2 = Number(topWearAmt) + Number(bottomAmt) + Number(shoseAmt);
              console.log(sum2);

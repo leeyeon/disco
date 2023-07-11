@@ -25,17 +25,6 @@ public class DiscoController {
     @Autowired
     DiscoService discoService;
 
-    @ApiOperation(value = "상품 추가")
-    @PostMapping("/insert/product")
-    public ResponseEntity<String> insertProduct(ProductDTO productDTO) throws Exception {
-        if (ObjectUtils.isEmpty(productDTO)) {
-            throw new Exception("파라미터 오류");
-        }else{
-            discoService.insertProduct(productDTO);
-            return ResponseEntity.ok("제품 추가 완료");
-        }
-    }
-
     @ApiOperation(value = "상품 조회")
     @GetMapping("/select/product/{productCd}")
     public ResponseEntity<List<String>> selectProduct (@PathVariable String productCd) throws Exception {
@@ -74,18 +63,34 @@ public class DiscoController {
     }
 
 
+
     @ApiOperation(value = "gpt 임시 api")
     @PostMapping("/recommandGPT/pick")
     public String recommandGPT(String pickCd, Model model) {
-        // JSON 데이터 생성
-        return  "{\n" +
-                "        \"productCd\" : \"2152090539\",\n" +
-                "        \"productName\" : \"[톰보이] 숏 리버시블 무스탕\",\n" +
-                "        \"brndCd\" : \"002331\",\n" +
-                "        \"brndNm\" : \"톰보이(백화점)\",\n" +
-                "        \"price\" : \"119700\",\n" +
-                "        \"division\" : \"상의\"\n" +
-                "    }";
+
+        List<ProductDTO> productDTOList = List.of(
+                new ProductDTO() {{
+                    setProductCd("2152090539");
+                    setProductName("[톰보이] 숏 리버시블 무스탕");
+                    setDivision("상의");
+                    setPrice("119700");
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                }},
+                new ProductDTO() {{
+                    setProductCd("2152078631");
+                    setProductName("톰보이 9173331971 백밴딩 원턱 와이드데님");
+                    setDivision("하의");
+                    setPrice("129000");
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                }}
+        );
+
+        discoService.insertProduct(productDTOList);
+
+        return "jsonView";
+
     }
 
 }
