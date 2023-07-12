@@ -92,10 +92,12 @@
     </script>
 
 </head>
-
 <body class="bg-gradient-primary-main">
-
     <script>
+    var check1 = "0";
+    var check2 = "0";
+    var check3 = "0";
+
         $(document).ready(function() {
             $("#disco-module-onoff").on("click", function() {
                 $("#disco-module").toggle();
@@ -147,11 +149,6 @@
             }
         }
 
-        function savePick() {
-            var pickNm = $('#pickNm').val();
-            console.log(pickNm);
-        }
-
          function getTotalsSum() {
              var sum2 = parseInt(0);
              var topWearAmt = $("#topWear").val();
@@ -161,6 +158,39 @@
              sum2 = Number(topWearAmt) + Number(bottomAmt) + Number(shoseAmt);
              console.log(sum2);
              $("#totalSum").val(sum2);
+         }
+         function checkFavStyle(s) {
+             if(s == "1"){
+                if( check1 == '0'){
+                     check1 = "1";
+                     alert(s+"켜짐");
+                     $("#favStyle1").addClass("hover");
+                } else{
+                     check1 = "0";
+                     alert("꺼짐");
+                    $("#favStyle1").css("background-color", "red");
+                }
+             } else if(s == "2"){
+                if( check2 == '0'){
+                     check2 = "1";
+                     alert(s+"켜짐");
+                    $("#favStyle2").css("background-color", "yellow");
+                } else{
+                     check2 = "0";
+                     alert("꺼짐");
+                    $("#favStyle2").css("background-color", "red");
+                }
+             } else if(s == "3"){
+                if( check2 == '0'){
+                     check2 = "1";
+                     alert(s+"켜짐");
+                    $("#favStyle3").css("background-color", "yellow");
+                } else{
+                     check2 = "0";
+                     alert("꺼짐");
+                    $("#favStyle3").css("background-color", "red");
+                }
+             }
          }
      </script>
 
@@ -270,11 +300,27 @@
                   <h5> 총 <input type="text" name="totalSum" id="totalSum" /> 원 </h5>
                   <label for="age">성별</label>  <input type="radio" name="gender" id="men" value="men" text="남성" checked /> 남성
                                                   <input type="radio" name="gender" id="women" value="women" text="여성" /> 여성<br/>
-                  <label for="style">선호 스타일</label>  <input type="text" name="favStyle" id="favStyle" /><br/>
+                  <label for="style">선호 스타일</label>
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <input type="button" name="favStyle1" id="favStyle1" onClick="checkFavStyle('1');" class="custom-btn btn-2" value="빈티지" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                    <li class="nav-item">
+                        <input type="button" name="favStyle2" id="favStyle2" onClick="checkFavStyle('2');" class="custom-btn btn-2" value="러블리" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                    <li class="nav-item">
+                        <input type="button" name="favStyle3" id="favStyle3" onClick="checkFavStyle('3');" class="custom-btn btn-2"value="캐주얼" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                  </ul>
               </div>
               <!--팝업 버튼 영역-->
               <div class="popup_bottom" style="float: bottom; margin-top: 300px;">
-                  <!--<a href="#" id="pickSave" onClick="savePick();" class="btn btn-success btn-icon-split" style="width:100%;">-->
                    <input type="submit" value="저장하기" class="btn btn-success btn-icon-split" style="width:100%;">
                    <span class="icon text-white-50">
                     <i class="fas fa-check">
