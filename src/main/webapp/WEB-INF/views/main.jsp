@@ -134,19 +134,27 @@
             if (confirm("선택하신 [" + pickNm + "] 를/을 상품 추천을 받아보시겠어요?")) {
                 $.ajax({
                     type: "POST",
-                    url: "/recommandGPT/pick",
+                    url: "/GPT/pick",
                     data: {
                         "pickCd": pickCd
                     },
                     success: function (data) {
-                    console.log(data);
-                        var newWindow = window.open("/myPickResult", "_blank");
-                        newWindow.data = data;
+                    openResizableWindow('/myPickResult', 1000, 700);
                     }
                 });
             } else {
                 alert("취소하였습니다");
             }
+        }
+
+        function openResizableWindow(url, width, height) {
+            var features = "width=" + width + ",height=" + height + ", resizable=no";
+            window.open(url, "_blank", features);
+        }
+
+        function savePick() {
+            var pickNm = $('#pickNm').val();
+            console.log(pickNm);
         }
 
          function getTotalsSum() {
@@ -159,6 +167,7 @@
              console.log(sum2);
              $("#totalSum").val(sum2);
          }
+
          function checkFavStyle(s) {
              if(s == "1"){
                 if( check1 == '0'){

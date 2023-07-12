@@ -62,11 +62,9 @@ public class DiscoController {
         return openAIApiDelegate.createRecommend(pickDTO);
     }
 
-
-
     @ApiOperation(value = "gpt 임시 api")
-    @PostMapping("/recommandGPT/pick")
-    public String recommandGPT(String pickCd, Model model) {
+    @PostMapping("/GPT/pick")
+    public String GPTPick(String pickCd, Model model) {
 
         List<ProductDTO> productDTOList = List.of(
                 new ProductDTO() {{
@@ -76,6 +74,9 @@ public class DiscoController {
                     setPrice("119700");
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setPickNm("페미닌 룩");
+                    setUserId("USER1");
                 }},
                 new ProductDTO() {{
                     setProductCd("2152078631");
@@ -84,6 +85,44 @@ public class DiscoController {
                     setPrice("129000");
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setPickNm("페미닌 룩");
+                    setUserId("USER1");
+                }}
+        );
+
+        discoService.insertProduct(productDTOList);
+
+        return "jsonView";
+
+    }
+
+    @ApiOperation(value = "gpt 임시 api")
+    @PostMapping("/reGPT/pick")
+    public String reGPTPick(String pickCd, Model model) {
+
+        List<ProductDTO> productDTOList = List.of(
+                new ProductDTO() {{
+                    setProductCd("2151447384");
+                    setProductName("톰보이 TOMBOY 포켓 데님셔켓 (9173313973)");
+                    setDivision("상의");
+                    setPrice("189000");
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setPickNm("페미닌 룩");
+                    setUserId("USER1");
+                }},
+                new ProductDTO() {{
+                    setProductCd("2151417403");
+                    setProductName("톰보이 TOMBOY 9173231984 이밴드스트링 데님 숏팬츠");
+                    setDivision("하의");
+                    setPrice("79000");
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setPickNm("페미닌 룩");
+                    setUserId("USER1");
                 }}
         );
 

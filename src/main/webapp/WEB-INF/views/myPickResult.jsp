@@ -24,6 +24,7 @@
     <link href="css/custom.css" rel="stylesheet">
 </head>
 <script>
+
      function showProduct(productCd, productName) {
          if (confirm("선택하신 [" + productName + "] 로/으로 바로 가볼까요?")) {
              var link = "https://www.thehyundai.com/front/pda/itemPtc.thd?slitmCd=" + productCd + "&sectId=&bfp=SearchList";
@@ -32,6 +33,41 @@
              alert("취소하였습니다");
          }
      }
+
+     function showDetailProduct(productCd) {
+        $("#productImage").removeClass("bg-login-image");
+        var secondLastChar = productCd.substring(productCd.length - 2, productCd.length - 1);
+        var thirdLastChar = productCd.substring(productCd.length - 3, productCd.length - 2);
+        var fourthLastChar = productCd.substring(productCd.length - 4, productCd.length - 3);
+        var fifthAndSixthChar = productCd.substring(4, 6);
+        var eightAndNineChar = productCd.substring(2, 4);
+
+        $("#productImage").css({
+          "background":
+            'url("https://image.thehyundai.com/static/' + secondLastChar + '/'+ thirdLastChar +'/' +fourthLastChar+'/'+ fifthAndSixthChar +'/'+ eightAndNineChar +'/'+ productCd +'_0_600.jpg")',
+          "background-position": "center",
+          "background-size": "cover"
+        });
+     }
+
+     function reProduct(pickCd, pickNm, division){
+        if (confirm("선택하신 ["+pickNm+"] 의 "+division+"를 재추천 받아보시겠어요?")) {
+             $.ajax({
+                type: "POST",
+                url: "/reGPT/pick",
+                data: {
+                    "pickCd": pickCd,
+                    "division": division
+                },
+                success: function (data) {
+                    alert(1);
+                }
+            });
+         } else {
+             alert("취소하였습니다");
+         }
+     }
+
 </script>
 <body>
     <div class="container">
@@ -42,13 +78,13 @@
                     <div class="card-body p-0" style="height: 600px;">
                         <!-- Nested Row within Card Body -->
                         <div class="row" style="height: 600px;">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image" id="productImage"></div>
                             <div class="col-lg-6">
                                 <div class="p-5" style="height: 600px; overflow-y: scroll;">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">MY PICK RESULT</h1>
-                                        <div class="h6 text-gray-600 text-xs">
-                                            openAI 가 당신의 스타일을 큐레이팅 한 결과입니다
+                                        <h1 class="h4 text-gray-600 mb-4">MY PICK RESULT</h1>
+                                        <div class="h1 text-gray-800 text-xs">
+                                            ${productDTOList[0].userId} 님의 "${productDTOList[0].pickNm}" 스타일을 큐레이팅 한 결과입니다
                                         </div>
                                     </div>
                                     <hr>
@@ -67,14 +103,18 @@
                                                                         <div class="card border-left-dark shadow h-100">
                                                                     </c:if>
                                                                         <div class="card-body">
-                                                                            <div class="row no-gutters align-items-center">
+                                                                            <div class="row no-gutters ">
                                                                                 <div class="col mr-2" style="cursor: pointer;" onClick="showProduct('${product.productCd}','${product.productName}');">
                                                                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                                         #${product.division} #${product.brndNm} <br> #${product.price}원
+                                                                                        #${product.division} #${product.brndNm} <br> #${product.price}원 #${product.pickNm}
                                                                                     </div>
-                                                                                    <div class="h5 mb-1 font-weight-bold text-gray-800">${product.productName}</div>
+                                                                                    <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">${product.productName}</div>
                                                                                 </div>
-                                                                                <div class="col-auto" onClick="delProduct('${product.productCd}','${product.productName}');">
+                                                                                <br><br><br><br><br>
+                                                                                <div class="col-auto mt-auto mb-2" onClick="showDetailProduct('${product.productCd}');" style="position: absolute; bottom: 0; left: 50;">
+                                                                                    <div class="h6 text-gray-600 text-xs"><u>사진 보기</u></div>
+                                                                                </div>
+                                                                                <div class="col-auto" onClick="reProduct('${product.pickCd}','${product.pickNm}','${product.division}');">
                                                                                     <a href="#" class="btn btn-danger btn-circle">
                                                                                         <i class="fas fa-trash"></i>
                                                                                     </a>
@@ -92,6 +132,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

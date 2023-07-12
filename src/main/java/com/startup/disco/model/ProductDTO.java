@@ -23,4 +23,8 @@ public class ProductDTO {
     private String brndNm; // 브랜드명
     private String price; // 가격
     private String division; // 분류
+    private long pickCd; // 픽ID
+    private String pickNm; // 제목
+    private String userId; // 사용자id
+    private String recomYn; // Y면 현재 추천, N이면 현재 추천 X
 }
