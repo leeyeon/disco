@@ -94,9 +94,10 @@
 </head>
 <body class="bg-gradient-primary-main">
     <script>
-    var check1 = "0";
-    var check2 = "0";
-    var check3 = "0";
+    var check = new Array();
+    var styleList = new Array();
+    check = [0,0,0,0,0,0,0,0,0,0,0];
+    styleList = ['빈티지','미니멀','비즈니스','캐주얼','레트로','페미닌','러블리','심플','모던','스트릿','클래식'];
 
         $(document).ready(function() {
             $("#disco-module-onoff").on("click", function() {
@@ -110,6 +111,34 @@
             $("#popupClose").on("click", function() {
                 $("#add-card-module").hide();
             });
+
+            $("#form_submit").on('click', function(){
+                let form_data = $("#pickDetail").serialize();
+                var pickStyle = "";
+                for(var i = 1; i<12; i++){
+                    if(check[i-1] == '1'){
+                        pickStyle += styleList[i-1]+',';
+                    }
+                }
+                form_data += '&style='+pickStyle;
+                console.log("~~~~~~ : "+form_data);
+                s_ajax(form_data);
+
+            });
+
+            $('.btn-2').click(function(){
+                 var styleId = $(this).attr("id");
+                for(var i=1; i<12; i++){
+                 if(check[i-1] == '0' && styleId == i){
+                    check[i-1] = "1";
+                    $(this).addClass("btn-2-hover");
+                 } else if(check[i-1] == '1' && styleId == i){
+                    check[i-1] = "0";
+                    $(this).removeClass("btn-2-hover");
+                 }
+                }
+            });
+
         });
 
         function delPick(pickCd, pickNm) {
@@ -167,40 +196,20 @@
              console.log(sum2);
              $("#totalSum").val(sum2);
          }
-
-         function checkFavStyle(s) {
-             if(s == "1"){
-                if( check1 == '0'){
-                     check1 = "1";
-                     alert(s+"켜짐");
-                     $("#favStyle1").addClass("hover");
-                } else{
-                     check1 = "0";
-                     alert("꺼짐");
-                    $("#favStyle1").css("background-color", "red");
-                }
-             } else if(s == "2"){
-                if( check2 == '0'){
-                     check2 = "1";
-                     alert(s+"켜짐");
-                    $("#favStyle2").css("background-color", "yellow");
-                } else{
-                     check2 = "0";
-                     alert("꺼짐");
-                    $("#favStyle2").css("background-color", "red");
-                }
-             } else if(s == "3"){
-                if( check2 == '0'){
-                     check2 = "1";
-                     alert(s+"켜짐");
-                    $("#favStyle3").css("background-color", "yellow");
-                } else{
-                     check2 = "0";
-                     alert("꺼짐");
-                    $("#favStyle3").css("background-color", "red");
-                }
-             }
+         function s_ajax(form_data) {
+              $.ajax({
+                 url: "insertPick",
+                 type: "POST",
+                 data: form_data,
+                 success: function(data){
+                    alert("저장되었습니다.");
+                 },
+                 error: function (request, status, error){
+                    alert("저장에 실패하였습니다.");
+                 }
+             });
          }
+
      </script>
 
     <div class="container">
@@ -296,41 +305,104 @@
               <div style="height: 20px; width: 375px; float: top;">
               </div>
               <!--팝업 컨텐츠 영역-->
-              <form action="pick.do" method="POST">
+              <form id="pickDetail">
               <div class="popup_cont">
                   <button id="popupClose" type="button" class="fa fa-times" style="float: right;"></button>
-                  <h5> My PICK ! </h5>
-                      <label for="pickNm">Pick 명</label>  <input type="text" name="pickNm" id="pickNm" /><br/>
-                      <label for="favBrnd">선호브랜드</label>  <input type="text" name="favBrand" id="favBrnd" /><br/>
-                      <h5> 항목별 예산설정 </h5>
-                      <label for="lblTop">상의</label>  <input type="text" name="topWear" id="topWear" onkeyup="getTotalsSum();" /><br/>
-                      <label for="lblBottom">하의</label>  <input type="text" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
-                      <label for="lblShose">신발</label>  <input type="text" name="shose" id="shose"  onkeyup="getTotalsSum();" /><br/>
-                  <h5> 총 <input type="text" name="totalSum" id="totalSum" /> 원 </h5>
-                  <label for="age">성별</label>  <input type="radio" name="gender" id="men" value="men" text="남성" checked /> 남성
-                                                  <input type="radio" name="gender" id="women" value="women" text="여성" /> 여성<br/>
-                  <label for="style">선호 스타일</label>
+                  <div>
+                  <h5 align="center" style="padding:10px;">    My PICK !</h5>
+                      <div>
+                        <label style="display:inline-block; width:100px; text-align:center;" for="pickNm">Pick 명</label>  <input style="width:250px;" type="text" name="pickNm" id="pickNm" /><br/>
+                      </div>
+                      <div>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="favBrnd">선호브랜드</label>  <input style="width:250px;" type="text" name="favBrand" id="favBrnd" /><br/>
+                      </div>
+                  </div>
+                  <div>
+                      <h5 align="center" style="padding:10px;">항목별 예산설정</h5>
+                      <div>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblTop">상의</label>  <input style="width:250px;" type="number" name="topWear" id="topWear" onkeyup="getTotalsSum();" /><br/>
+                      </div>
+                      <div>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input style="width:250px;" type="number" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
+                      </div>
+                      <div>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblShose">신발</label>  <input style="width:250px;" type="number" name="shose" id="shose"  onkeyup="getTotalsSum();" /><br/>
+                      </div>
+                  <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" /> 원 </h5>
+                  <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
+                    <input style="width:20px;" type="radio" name="sex" id="men" value="1" text="남성" checked /> 남성
+                    <input style="width:20px;" type="radio" name="sex" id="women" value="0" text="여성" /> 여성<br/>
+                  </div>
+                  <div>
+                  <h5 align="center" style="padding:10px;">선호 스타일 (*복수선택가능)</h5>
                   <ul class="nav nav-pills">
                     <li class="nav-item">
-                        <input type="button" name="favStyle1" id="favStyle1" onClick="checkFavStyle('1');" class="custom-btn btn-2" value="빈티지" style="margin:5px;">
+                        <input type="button" name="favStyle1" id="1"  class="custom-btn btn-2" value="빈티지" style="margin:5px;">
                             <span></span>
                         </input>
                     </li>
                     <li class="nav-item">
-                        <input type="button" name="favStyle2" id="favStyle2" onClick="checkFavStyle('2');" class="custom-btn btn-2" value="러블리" style="margin:5px;">
+                        <input type="button" name="favStyle2" id="2" class="custom-btn btn-2" value="미니멀" style="margin:5px;">
                             <span></span>
                         </input>
                     </li>
                     <li class="nav-item">
-                        <input type="button" name="favStyle3" id="favStyle3" onClick="checkFavStyle('3');" class="custom-btn btn-2"value="캐주얼" style="margin:5px;">
+                        <input type="button" name="favStyle3" id="3" class="custom-btn btn-2"value="비즈니스" style="margin:5px;">
                             <span></span>
                         </input>
                     </li>
                   </ul>
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <input type="button" name="favStyle4" id="4" class="custom-btn btn-2" value="캐주얼" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                    <li class="nav-item">
+                        <input type="button" name="favStyle5" id="5" class="custom-btn btn-2" value="레트로" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                    <li class="nav-item">
+                        <input type="button" name="favStyle6" id="6" class="custom-btn btn-2"value="페미닌" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                  </ul>
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <input type="button" name="favStyle7" id="7" class="custom-btn btn-2" value="러블리" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                    <li class="nav-item">
+                        <input type="button" name="favStyle8" id="8" class="custom-btn btn-2" value="심플" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                    <li class="nav-item">
+                        <input type="button" name="favStyle9" id="9" class="custom-btn btn-2"value="모던" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                  </ul>
+                  <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <input type="button" name="favStyle10" id="10" class="custom-btn btn-2" value="스트릿" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                    <li class="nav-item">
+                        <input type="button" name="favStyle11" id="11" class="custom-btn btn-2" value="클래식" style="margin:5px;">
+                            <span></span>
+                        </input>
+                    </li>
+                  </ul>
+               </div>
               </div>
               <!--팝업 버튼 영역-->
-              <div class="popup_bottom" style="float: bottom; margin-top: 300px;">
-                   <input type="submit" value="저장하기" class="btn btn-success btn-icon-split" style="width:100%;">
+              <div class="popup_bottom" style="float: bottom; margin-top: 30%;">
+                   <input type="submit" id="form_submit" value="저장하기" class="btn btn-success btn-icon-split" style="width:100%;">
                    <span class="icon text-white-50">
                     <i class="fas fa-check">
                     </i>

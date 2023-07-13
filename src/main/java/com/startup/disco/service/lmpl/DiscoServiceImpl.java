@@ -81,10 +81,18 @@ public class DiscoServiceImpl implements DiscoService {
         }
     }
 
-    public void insertPick (String pickNm){
-        System.out.println("~~~~ServiceImpl 들어옴 ! "+pickNm);
+    public void insertPick (Integer bottomAmt, String delFlag, String brnd, String pickNm, String sex, Integer shoseAmt, String style, Integer topAmt, String userId){
+        System.out.println("~~~~ServiceImpl 들어옴 ! "+style);
         PickDTO pickDto = new PickDTO();
         pickDto.setPickNm(pickNm);
+        pickDto.setBottomAmt(bottomAmt);
+        pickDto.setDelFlag(delFlag);
+        pickDto.setBrnd(brnd);
+        pickDto.setSex(sex);
+        pickDto.setShoesAmt(shoseAmt);
+        pickDto.setStyle(style);
+        pickDto.setTopAmt(topAmt);
+        pickDto.setUserId(userId);
         PickDTO save = pickRepository.save(pickDto);
     }
 

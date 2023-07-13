@@ -10,9 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,11 +40,23 @@ public class FrontController {
     }
 
     @ApiOperation(value = "pick 추가")
-    @PostMapping("pick.do")
-    public String insertPick(@RequestParam String pickNm) {
+    @RequestMapping(value = "/insertPick", method = { RequestMethod.POST })
+    public String insertPick(@RequestParam("pickNm") String pickNm,
+                             @RequestParam("bottom") Integer bottomAmt,
+                             @RequestParam("shose") Integer shoseAmt,
+                             @RequestParam("favBrand") String brnd,
+                             @RequestParam("sex") String sex,
+                             @RequestParam("style") String style,
+                             @RequestParam("topWear") Integer topAmt) {
         //pickDTO.setPickNm(pickNm);
+
         System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+pickNm);
-        discoService.insertPick(pickNm);
+        System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+bottomAmt);
+        System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+style);
+        String delFlag = "N";
+        String userId = "USER1";
+
+        discoService.insertPick(bottomAmt, delFlag, brnd, pickNm, sex, shoseAmt, style, topAmt, userId);
 
         //model.addAttribute("pickDTOList", pickDTOList);
         //model.addAttribute("msg", "저장되낭");
