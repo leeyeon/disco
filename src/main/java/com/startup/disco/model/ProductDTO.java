@@ -26,5 +26,7 @@ public class ProductDTO {
     private long pickCd; // 픽ID
     private String pickNm; // 제목
     private String userId; // 사용자id
-    private String recomYn; // Y면 현재 추천, N이면 현재 추천 X
+    private String sex; // 성별 0:남성, 1:여성, 2:기타
+
+
 }

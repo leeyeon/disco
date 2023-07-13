@@ -37,7 +37,7 @@ public class DiscoServiceImpl implements DiscoService {
             productDTO.setPickCd(gptRecm.getPickCd());
             productDTO.setPickNm(gptRecm.getPickNm());
             productDTO.setUserId(gptRecm.getUserId());
-            productDTO.setRecomYn("Y");
+            productDTO.setSex(gptRecm.getSex());
 
             productRepository.save(productDTO);
 

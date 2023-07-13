@@ -6,6 +6,7 @@ import com.startup.disco.model.ProductDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -64,7 +65,9 @@ public class DiscoController {
 
     @ApiOperation(value = "gpt 임시 api")
     @PostMapping("/GPT/pick")
-    public String GPTPick(String pickCd, Model model) {
+    public String GPTPick(@RequestParam(value = "pickDTOJson", required = true) Object pickDTOJson) {
+
+        System.out.println(pickDTOJson);
 
         List<ProductDTO> productDTOList = List.of(
                 new ProductDTO() {{
@@ -77,12 +80,52 @@ public class DiscoController {
                     setPickCd(1);
                     setPickNm("페미닌 룩");
                     setUserId("USER1");
+                    setSex("1");
                 }},
                 new ProductDTO() {{
                     setProductCd("2152078631");
                     setProductName("톰보이 9173331971 백밴딩 원턱 와이드데님");
                     setDivision("하의");
                     setPrice("129000");
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setPickNm("페미닌 룩");
+                    setUserId("USER1");
+                    setSex("1");
+                }},
+                new ProductDTO() {{
+                    setProductCd("2151565519");
+                    setProductName("[TOMBOY] 트위스티드 코튼 원피스 9103241424 (1 color)");
+                    setDivision("상하의");
+                    setPrice("143400");
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setPickNm("페미닌 룩");
+                    setUserId("USER1");
+                    setSex("1");
+                }}
+        );
+
+        discoService.insertProduct(productDTOList);
+
+        return "jsonView";
+
+    }
+
+    @ApiOperation(value = "재 호출 gpt 임시 api")
+    @PostMapping("/reGPT/pick")
+    public String reGPTPick(@RequestParam(value = "productDTOJson", required = true) Object productDTOJson) {
+
+        System.out.println(productDTOJson);
+
+        List<ProductDTO> productDTOList = List.of(
+                new ProductDTO() {{
+                    setProductCd("2151567416");
+                    setProductName("톰보이 TOMBOY  코튼 린넨 셔츠원피스 (9103241435)");
+                    setDivision("상하의");
+                    setPrice("155400");
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
@@ -97,38 +140,13 @@ public class DiscoController {
 
     }
 
-    @ApiOperation(value = "gpt 임시 api")
-    @PostMapping("/reGPT/pick")
-    public String reGPTPick(String pickCd, Model model) {
+    @ApiOperation(value = "현재 추천받은 api")
+    @GetMapping("/reCommand/list")
+    public String reCommandList() {
 
-        List<ProductDTO> productDTOList = List.of(
-                new ProductDTO() {{
-                    setProductCd("2151447384");
-                    setProductName("톰보이 TOMBOY 포켓 데님셔켓 (9173313973)");
-                    setDivision("상의");
-                    setPrice("189000");
-                    setBrndCd("002331");
-                    setBrndNm("톰보이(백화점)");
-                    setPickCd(1);
-                    setPickNm("페미닌 룩");
-                    setUserId("USER1");
-                }},
-                new ProductDTO() {{
-                    setProductCd("2151417403");
-                    setProductName("톰보이 TOMBOY 9173231984 이밴드스트링 데님 숏팬츠");
-                    setDivision("하의");
-                    setPrice("79000");
-                    setBrndCd("002331");
-                    setBrndNm("톰보이(백화점)");
-                    setPickCd(1);
-                    setPickNm("페미닌 룩");
-                    setUserId("USER1");
-                }}
-        );
+        JSONArray jsonArray = new JSONArray(discoService.allProductList());
 
-        discoService.insertProduct(productDTOList);
-
-        return "jsonView";
+        return String.valueOf(jsonArray);
 
     }
 
