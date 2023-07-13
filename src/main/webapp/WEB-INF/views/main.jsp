@@ -311,29 +311,31 @@
           <div class="popup_box" style="height: 800px;">
               <div style="height: 20px; width: 375px; float: top;">
               </div>
+                <div>
+                  <button id="popupClose" class="close close3" type="button" style="float:right;"></button>
+                </div>
               <!--팝업 컨텐츠 영역-->
               <form id="pickDetail">
               <div class="popup_cont">
-                  <button id="popupClose" type="button" class="fa fa-times" style="float: right;"></button>
                   <div>
-                  <h5 align="center" style="padding:10px;">    My PICK !</h5>
+                  <h2 align="center" style="margin-left:30px; padding:20px;">    My PICK !</h2>
                       <div>
-                        <label style="display:inline-block; width:100px; text-align:center;" for="pickNm">Pick 명</label>  <input style="width:250px;" type="text" name="pickNm" id="pickNm" /><br/>
+                        <label style="display:inline-block; width:100px; text-align:center;" for="pickNm">Pick 명</label>  <input class="popup-input" style="width:250px;" type="text" name="pickNm" id="pickNm" /><br/>
                       </div>
                       <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="favBrnd">선호브랜드</label>  <input style="width:250px;" type="text" name="favBrand" id="favBrnd" /><br/>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="favBrnd">선호브랜드</label>  <input class="popup-input" style="width:250px;" type="text" name="favBrand" id="favBrnd" /><br/>
                       </div>
                   </div>
                   <div>
                       <h5 align="center" style="padding:10px;">항목별 예산설정</h5>
                       <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblTop">상의</label>  <input style="width:250px;" type="number" name="topWear" id="topWear" onkeyup="getTotalsSum();" /><br/>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblTop">상의</label>  <input class="popup-input" style="width:250px;" type="number" name="topWear" id="topWear" onkeyup="getTotalsSum();" /><br/>
                       </div>
                       <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input style="width:250px;" type="number" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input class="popup-input" style="width:250px;" type="number" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
                       </div>
                       <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblShose">신발</label>  <input style="width:250px;" type="number" name="shose" id="shose"  onkeyup="getTotalsSum();" /><br/>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblShose">신발</label>  <input class="popup-input" style="width:250px;" type="number" name="shose" id="shose"  onkeyup="getTotalsSum();" /><br/>
                       </div>
                   <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" style="text-align:center; border:none;" disabled/> 원 </h5>
                   <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
@@ -408,12 +410,8 @@
                </div>
               </div>
               <!--팝업 버튼 영역-->
-              <div class="popup_bottom" style="float: bottom; margin-top: 10%;">
-                   <input type="submit" id="form_submit" value="저장하기" class="btn btn-success btn-icon-split" style="width:100%;">
-                   <span class="icon text-white-50">
-                    <i class="fas fa-check">
-                    </i>
-                   </span>
+              <div class="popup_bottom" style="float: bottom; margin-top: 1%;">
+                   <input type="submit" id="form_submit" value="저장하기" class="w-btn w-btn-outline w-btn-indigo" style="width:100%;">
                   </a>
               </div>
               </form>
