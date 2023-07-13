@@ -193,11 +193,6 @@
             window.open(url, "_blank", features);
         }
 
-        function savePick() {
-            var pickNm = $('#pickNm').val();
-            console.log(pickNm);
-        }
-
          function getTotalsSum() {
              var sum2 = parseInt(0);
              var topWearAmt = $("#topWear").val();
@@ -340,7 +335,7 @@
                       <div>
                       <label style="display:inline-block; width:100px; text-align:center;" for="lblShose">신발</label>  <input style="width:250px;" type="number" name="shose" id="shose"  onkeyup="getTotalsSum();" /><br/>
                       </div>
-                  <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" /> 원 </h5>
+                  <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" style="text-align:center; border:none;" disabled/> 원 </h5>
                   <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
                     <input style="width:20px;" type="radio" name="sex" id="men" value="1" text="남성" checked /> 남성
                     <input style="width:20px;" type="radio" name="sex" id="women" value="0" text="여성" /> 여성<br/>
@@ -413,7 +408,7 @@
                </div>
               </div>
               <!--팝업 버튼 영역-->
-              <div class="popup_bottom" style="float: bottom; margin-top: 30%;">
+              <div class="popup_bottom" style="float: bottom; margin-top: 10%;">
                    <input type="submit" id="form_submit" value="저장하기" class="btn btn-success btn-icon-split" style="width:100%;">
                    <span class="icon text-white-50">
                     <i class="fas fa-check">
