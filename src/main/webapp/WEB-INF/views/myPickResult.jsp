@@ -50,23 +50,37 @@
         });
      }
 
-     function reProduct(pickCd, pickNm, division){
-        if (confirm("선택하신 ["+pickNm+"] 의 "+division+"를 재추천 받아보시겠어요?")) {
-             $.ajax({
-                type: "POST",
-                url: "/reGPT/pick",
-                data: {
-                    "pickCd": pickCd,
-                    "division": division
-                },
-                success: function (data) {
-                    alert(1);
-                }
-            });
-         } else {
-             alert("취소하였습니다");
-         }
-     }
+    function reProduct(productDTOList) {
+      if (confirm("재추천 받아보시겠어요?")) {
+        $.ajax({
+          type: "GET",
+          url: "/reCommand/list",
+          success: function (data) {
+              reGPT(data);
+          },
+          error: function (xhr, status, error) {
+            // 요청 실패 시 처리
+            console.log(xhr.responseText);
+            alert("서버 요청에 실패했습니다");
+          }
+        });
+      } else {
+        alert("취소하였습니다");
+      }
+    }
+
+    function reGPT(data) {
+        $.ajax({
+            type: "POST",
+            url: "/reGPT/pick",
+            data: {
+                "productDTOJson": JSON.stringify(data)
+            },
+            success: function (data) {
+                location.reload(); // 페이지 새로고침
+            }
+        });
+    }
 
 </script>
 <body>
@@ -81,12 +95,21 @@
                             <div class="col-lg-6 d-none d-lg-block bg-login-image" id="productImage"></div>
                             <div class="col-lg-6">
                                 <div class="p-5" style="height: 600px; overflow-y: scroll;">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-600 mb-4">MY PICK RESULT</h1>
-                                        <div class="h1 text-gray-800 text-xs">
-                                            ${productDTOList[0].userId} 님의 "${productDTOList[0].pickNm}" 스타일을 큐레이팅 한 결과입니다
-                                        </div>
-                                    </div>
+                                   <div class="text-center">
+                                       <div class="col-auto" style="display: flex; justify-content: space-between; align-items: center;">
+                                           <div class="col-auto" style="margin: 0 auto;">
+                                               <h1 class="h4 text-gray-600 mb-4">MY PICK RESULT</h1>
+                                           </div>
+                                           <div class="col-auto" onClick="reProduct('${productDTOList}');">
+                                               <a href="#" class="btn btn-primary btn-circle">
+                                                   <i class="fas fa-search fa-fw"></i>
+                                               </a>
+                                           </div>
+                                       </div>
+                                       <div class="h1 text-gray-800 text-xs">
+                                           ${productDTOList[0].userId} 님의 "${productDTOList[0].pickNm}" 스타일을 큐레이팅 한 결과입니다
+                                       </div>
+                                   </div>
                                     <hr>
                                     <div class="row">
                                         <div class="btn col-xl-12 col-md-12">
@@ -113,11 +136,6 @@
                                                                                 <br><br><br><br><br>
                                                                                 <div class="col-auto mt-auto mb-2" onClick="showDetailProduct('${product.productCd}');" style="position: absolute; bottom: 0; left: 50;">
                                                                                     <div class="h6 text-gray-600 text-xs"><u>사진 보기</u></div>
-                                                                                </div>
-                                                                                <div class="col-auto" onClick="reProduct('${product.pickCd}','${product.pickNm}','${product.division}');">
-                                                                                    <a href="#" class="btn btn-danger btn-circle">
-                                                                                        <i class="fas fa-trash"></i>
-                                                                                    </a>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
