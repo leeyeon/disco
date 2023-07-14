@@ -127,7 +127,7 @@ public class DiscoController {
                     setProductCd("2151567416");
                     setProductName("톰보이 TOMBOY  코튼 린넨 셔츠원피스 (9103241435)");
                     setDivision("상하의");
-                    setPrice(155400);
+                    setPrice(String.valueOf(155400));
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
