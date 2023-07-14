@@ -5,6 +5,7 @@ import com.startup.disco.model.PickDTO;
 import com.startup.disco.model.ProductDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -61,7 +62,7 @@ public class OpenAIApiDelegate {
      * @param pickDTO
      * @return
      */
-    public ProductDTO createRecommend(PickDTO pickDTO) {
+    public List<ProductDTO> createRecommend(PickDTO pickDTO) {
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add((request, body, execution) -> {
@@ -74,17 +75,12 @@ public class OpenAIApiDelegate {
                 .build()
                 .toUri();
 
-        for (ProductDTO productdto: pickDTO.getProductList()
-             ) {
-            System.out.println(productdto.toString());
-        }
-
         final HttpEntity<PickDTO> request = new HttpEntity<>(pickDTO); // api 요청 쿼리 생성 (중요)
-        final ResponseEntity<ProductDTO> response = restTemplate.exchange(
+        final ResponseEntity<List<ProductDTO>> response = restTemplate.exchange(
                 uri,
                 HttpMethod.POST,
                 request,
-                ProductDTO.class
+                new ParameterizedTypeReference<List<ProductDTO>>(){}
         );
 
         return response.getBody();

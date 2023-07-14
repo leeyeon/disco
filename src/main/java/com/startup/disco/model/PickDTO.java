@@ -42,7 +42,10 @@ public class PickDTO {
     private String delFlag = "";
 
     @Transient
-    private List<ProductDTO> productList = new ArrayList<>();
+    private List<String> productList;
+
+    @Transient
+    private int recommendCnt = 2; // 상품 픽 개수 (디폴트 2)
 
     public String getSexNm() {
         if(sex.equals("0")) {
