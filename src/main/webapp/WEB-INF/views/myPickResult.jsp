@@ -50,11 +50,14 @@
         });
      }
 
-    function reProduct(productDTOList) {
+    function reProduct(productDTOList, pickCd) {
       if (confirm("재추천 받아보시겠어요?")) {
         $.ajax({
-          type: "GET",
+          type: "POST",
           url: "/reCommand/list",
+          data: {
+              "pickCd": pickCd
+          },
           success: function (data) {
               reGPT(data);
           },
@@ -74,7 +77,7 @@
             type: "POST",
             url: "/reGPT/pick",
             data: {
-                "productDTOJson": JSON.stringify(data)
+                "gptJson": JSON.stringify(data)
             },
             success: function (data) {
                 location.reload(); // 페이지 새로고침
@@ -91,66 +94,66 @@
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0" style="height: 600px;">
                         <!-- Nested Row within Card Body -->
-                        <div class="row" style="height: 600px;">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image" id="productImage"></div>
-                            <div class="col-lg-6">
-                                <div class="p-5" style="height: 600px; overflow-y: scroll;">
-                                   <div class="text-center">
-                                       <div class="col-auto" style="display: flex; justify-content: space-between; align-items: center;">
-                                           <div class="col-auto" style="margin: 0 auto;">
-                                               <h1 class="h4 text-gray-600 mb-4">MY PICK RESULT</h1>
-                                           </div>
-                                           <div class="col-auto" onClick="reProduct('${productDTOList}');">
-                                               <a href="#" class="btn btn-primary btn-circle">
-                                                   <i class="fas fa-search fa-fw"></i>
-                                               </a>
-                                           </div>
-                                       </div>
-                                       <div class="h1 text-gray-800 text-xs">
-                                           ${productDTOList[0].userId} 님의 "${productDTOList[0].pickNm}" 스타일을 큐레이팅 한 결과입니다
-                                       </div>
+                        <div class="p-5">
+                           <div class="text-center">
+                               <div class="col-auto" style="display: flex; justify-content: space-between; align-items: center;">
+                                   <div class="col-auto" style="margin: 0 auto;">
+                                       <h1 class="h4 text-gray-600 mb-4">MY PICK RESULT</h1>
                                    </div>
-                                    <hr>
-                                    <div class="row">
-                                        <div class="btn col-xl-12 col-md-12">
-                                            <div class="card shadow h-100">
-                                                <div class="card-body">
-                                                    <div class="col text-left">
-                                                        <c:forEach var="product" items="${productDTOList}" varStatus="status">
-                                                            <div class="row mb-2" id="product${product.productCd}">
-                                                                <div class="col-xl-12 col-md-12">
-                                                                    <c:if test="${status.index % 2 eq 0}">
-                                                                        <div class="card border-left-warning shadow h-100">
-                                                                    </c:if>
-                                                                    <c:if test="${status.index % 2 eq 1}">
-                                                                        <div class="card border-left-dark shadow h-100">
-                                                                    </c:if>
-                                                                        <div class="card-body">
-                                                                            <div class="row no-gutters ">
-                                                                                <div class="col mr-2" style="cursor: pointer;" onClick="showProduct('${product.productCd}','${product.productName}');">
-                                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                                        #${product.division} #${product.brndNm} <br> #${product.price}원 #${product.pickNm}
-                                                                                    </div>
-                                                                                    <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">${product.productName}</div>
-                                                                                </div>
-                                                                                <br><br><br><br><br>
-                                                                                <div class="col-auto mt-auto mb-2" onClick="showDetailProduct('${product.productCd}');" style="position: absolute; bottom: 0; left: 50;">
-                                                                                    <div class="h6 text-gray-600 text-xs"><u>사진 보기</u></div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
+                                   <div class="col-auto" onClick="reProduct('${productDTOList}', '${productDTOList[0].pickCd}');">
+                                       <a href="#" class="btn btn-primary btn-circle">
+                                           <i class="fas fa-search fa-fw"></i>
+                                       </a>
+                                   </div>
+                               </div>
+                               <div class="h1 text-gray-800 text-xs">
+                                   ${productDTOList[0].userId} 님의 스타일을 큐레이팅 한 결과입니다
+                               </div>
+                           </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12">
+                                    <div id="productCarousel" class="carousel slide" data-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <c:forEach var="product" items="${productDTOList}" varStatus="status">
+                                                <c:choose>
+                                                    <c:when test="${status.index % 2 eq 0}">
+                                                        <div class="carousel-item${status.index eq 0 ? ' active' : ''}">
+                                                            <div class="row">
+                                                    </c:when>
+                                                </c:choose>
+                                                <div class="col-xl-4 col-md-6 mb-2" id="product${product.productCd}">
+                                                    <div class="card border-left-warning shadow h-100">
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters">
+                                                                <div class="col-4 mr-2" style="cursor: pointer;" onClick="showProduct('${product.productCd}','${product.productName}');">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                        #${product.division} #${product.brndNm} <br> #${product.price}원
                                                                     </div>
+                                                                    <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">${product.productName}</div>
                                                                 </div>
+                                                                <div class="col-6 d-none d-md-block bg-login-image" style = "height : 300px" id="productImage"></div>
                                                             </div>
-                                                        </c:forEach>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                                <c:if test="${status.index % 2 eq 1 or status.last}">
+                                                    </div>
+                                                    </div>
+                                                </c:if>
+                                            </c:forEach>
                                         </div>
+                                        <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                        <a class="carousel-control-next" href="#productCarousel" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>

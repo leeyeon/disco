@@ -35,7 +35,6 @@ public class DiscoServiceImpl implements DiscoService {
             productDTO.setPrice(gptRecm.getPrice());
             productDTO.setProductName(gptRecm.getProductName());
             productDTO.setPickCd(gptRecm.getPickCd());
-            productDTO.setPickNm(gptRecm.getPickNm());
             productDTO.setUserId(gptRecm.getUserId());
             productDTO.setSex(gptRecm.getSex());
 
@@ -53,7 +52,7 @@ public class DiscoServiceImpl implements DiscoService {
         }
         for (ProductDTO productDTO : productList) {
             resultList.add(productDTO.getProductName());
-            resultList.add(productDTO.getPrice());
+            resultList.add(String.valueOf(productDTO.getPrice()));
         }
         return resultList;
     }
@@ -104,6 +103,11 @@ public class DiscoServiceImpl implements DiscoService {
             throw new BaseException("데이터 없음");
         }
         return productDTOList;
+    }
+
+    @Override
+    public PickDTO selectPick(long pickCd) throws BaseException {
+        return pickRepository.findByPickCd(pickCd);
     }
 
 }

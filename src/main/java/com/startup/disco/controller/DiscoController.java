@@ -7,6 +7,7 @@ import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -14,7 +15,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -76,11 +79,10 @@ public class DiscoController {
                     setProductCd("2152090539");
                     setProductName("[톰보이] 숏 리버시블 무스탕");
                     setDivision("상의");
-                    setPrice("119700");
+                    setPrice(119700);
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
-                    setPickNm("페미닌 룩");
                     setUserId("USER1");
                     setSex("1");
                 }},
@@ -88,11 +90,10 @@ public class DiscoController {
                     setProductCd("2152078631");
                     setProductName("톰보이 9173331971 백밴딩 원턱 와이드데님");
                     setDivision("하의");
-                    setPrice("129000");
+                    setPrice(129000);
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
-                    setPickNm("페미닌 룩");
                     setUserId("USER1");
                     setSex("1");
                 }},
@@ -100,11 +101,10 @@ public class DiscoController {
                     setProductCd("2151565519");
                     setProductName("[TOMBOY] 트위스티드 코튼 원피스 9103241424 (1 color)");
                     setDivision("상하의");
-                    setPrice("143400");
+                    setPrice(143400);
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
-                    setPickNm("페미닌 룩");
                     setUserId("USER1");
                     setSex("1");
                 }}
@@ -118,20 +118,19 @@ public class DiscoController {
 
     @ApiOperation(value = "재 호출 gpt 임시 api")
     @PostMapping("/reGPT/pick")
-    public String reGPTPick(@RequestParam(value = "productDTOJson", required = true) Object productDTOJson) {
+    public String reGPTPick(@RequestParam(value = "gptJson", required = true) Object gptJson) {
 
-        System.out.println(productDTOJson);
+        System.out.println(gptJson);
 
         List<ProductDTO> productDTOList = List.of(
                 new ProductDTO() {{
                     setProductCd("2151567416");
                     setProductName("톰보이 TOMBOY  코튼 린넨 셔츠원피스 (9103241435)");
                     setDivision("상하의");
-                    setPrice("155400");
+                    setPrice(155400);
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
-                    setPickNm("페미닌 룩");
                     setUserId("USER1");
                 }}
         );
@@ -143,13 +142,20 @@ public class DiscoController {
     }
 
     @ApiOperation(value = "현재 추천받은 api")
-    @GetMapping("/reCommand/list")
-    public String reCommandList() {
+    @PostMapping("/reCommand/list")
+    public String reCommandList(@RequestParam(value = "pickCd", required = true) long pickCd) {
+        PickDTO pickDTO = discoService.selectPick(pickCd);
+        System.out.println(pickDTO);
+        List<ProductDTO> productDTOList = discoService.allProductList();
+        System.out.println(productDTOList);
 
-        JSONArray jsonArray = new JSONArray(discoService.allProductList());
+        JSONArray jsonArray = new JSONArray();
+        JSONObject response = new JSONObject();
+        response.put("pickDTO", new JSONObject(pickDTO));
+        response.put("productDTOList", new JSONArray(productDTOList));
+        jsonArray.put(response);
 
-        return String.valueOf(jsonArray);
-
+        return jsonArray.toString();
     }
 
 }
