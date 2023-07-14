@@ -96,17 +96,6 @@ public class DiscoController {
                     setPickCd(1);
                     setUserId("USER1");
                     setSex("1");
-                }},
-                new ProductDTO() {{
-                    setProductCd("2151565519");
-                    setProductName("[TOMBOY] 트위스티드 코튼 원피스 9103241424 (1 color)");
-                    setDivision("상하의");
-                    setPrice(String.valueOf(143400));
-                    setBrndCd("002331");
-                    setBrndNm("톰보이(백화점)");
-                    setPickCd(1);
-                    setUserId("USER1");
-                    setSex("1");
                 }}
         );
 
@@ -132,6 +121,17 @@ public class DiscoController {
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
                     setUserId("USER1");
+                }},
+                new ProductDTO() {{
+                    setProductCd("2151565519");
+                    setProductName("[TOMBOY] 트위스티드 코튼 원피스 9103241424 (1 color)");
+                    setDivision("상하의");
+                    setPrice(String.valueOf(143400));
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setUserId("USER1");
+                    setSex("1");
                 }}
         );
 
