@@ -67,9 +67,16 @@ public class FrontController {
         return "main";
     }
 
+    /**
+     * 검색결과
+     * @param model
+     * @param pickCd
+     * @return
+     */
     @GetMapping("/myPickResult")
     public String myPickResult(Model model, @RequestParam(value = "pickCd", required = true) long pickCd) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
+
         List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO);
 
         model.addAttribute("productDTOList", productDTOList);

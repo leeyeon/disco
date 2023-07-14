@@ -239,7 +239,7 @@
                                                 </c:if>
                                                     <div class="card-body">
                                                         <div class="row no-gutters align-items-center">
-                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.productList}','${pick.pickNm}');">
+                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.pickNm}');">
                                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                                     ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
                                                                 </div>
