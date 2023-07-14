@@ -79,7 +79,7 @@ public class DiscoController {
                     setProductCd("2152090539");
                     setProductName("[톰보이] 숏 리버시블 무스탕");
                     setDivision("상의");
-                    setPrice(119700);
+                    setPrice(String.valueOf(119700));
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
@@ -90,7 +90,7 @@ public class DiscoController {
                     setProductCd("2152078631");
                     setProductName("톰보이 9173331971 백밴딩 원턱 와이드데님");
                     setDivision("하의");
-                    setPrice(129000);
+                    setPrice(String.valueOf(129000));
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
@@ -101,7 +101,7 @@ public class DiscoController {
                     setProductCd("2151565519");
                     setProductName("[TOMBOY] 트위스티드 코튼 원피스 9103241424 (1 color)");
                     setDivision("상하의");
-                    setPrice(143400);
+                    setPrice(String.valueOf(143400));
                     setBrndCd("002331");
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
