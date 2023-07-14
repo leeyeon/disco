@@ -58,8 +58,10 @@ public class DiscoController {
 
     @ApiOperation(value = "OPENAI 상품추천 결과")
     @GetMapping("/openai/create-recommend-product")
-    public ProductDTO createRecommendProduct(@RequestParam(value = "pickCd", required = true) long pickCd) {
+    public ProductDTO createRecommendProduct(@RequestParam(value = "pickCd", required = true) long pickCd,
+            @RequestParam(value = "productList", required = false) List<ProductDTO> productList) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
+        pickDTO.setProductList(productList); // 기추천받은 상품목록 세팅
         return openAIApiDelegate.createRecommend(pickDTO);
     }
 

@@ -1,7 +1,6 @@
 package com.startup.disco.delegate;
 
 import com.startup.disco.delegate.command.CreateCompletionCommand;
-import com.startup.disco.delegate.command.CreateGptRequest;
 import com.startup.disco.model.PickDTO;
 import com.startup.disco.model.ProductDTO;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +56,11 @@ public class OpenAIApiDelegate {
         return response.getBody();
     }
 
+    /**
+     * gpt 상품 추천 검색 결과
+     * @param pickDTO
+     * @return
+     */
     public ProductDTO createRecommend(PickDTO pickDTO) {
 
         RestTemplate restTemplate = new RestTemplate();
@@ -70,11 +74,12 @@ public class OpenAIApiDelegate {
                 .build()
                 .toUri();
 
-        CreateGptRequest createGptRequest = CreateGptRequest.builder()
-                .query("여성 캐쥬얼 니트 40000원 이하 추천해줘") // TODO pick에 맞게 쿼리 변경 필요
-                .build();
+        for (ProductDTO productdto: pickDTO.getProductList()
+             ) {
+            System.out.println(productdto.toString());
+        }
 
-        final HttpEntity<CreateGptRequest> request = new HttpEntity<>(createGptRequest); // api 요청 쿼리 생성 (중요)
+        final HttpEntity<PickDTO> request = new HttpEntity<>(pickDTO); // api 요청 쿼리 생성 (중요)
         final ResponseEntity<ProductDTO> response = restTemplate.exchange(
                 uri,
                 HttpMethod.POST,

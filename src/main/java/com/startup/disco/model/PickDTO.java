@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,21 +25,24 @@ public class PickDTO {
     @Id @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "pickCd")
     private long pickCd; // 픽ID
 
-    private String userId; // 사용자id
+    private String userId = ""; // 사용자id
 
-    private String pickNm; // 제목
+    private String pickNm = ""; // 제목
 
-    private int topAmt; // 상의 예산 금액
-    private int bottomAmt; // 하의 예산 금액
-    private int shoesAmt; // 신발 예산 금액
-
-    @Column(length = 2)
-    private String sex; // 성별 0:남성, 1:여성, 2:기타
-    private String brnd; // 선호브랜드
-    private String style; // 선호스타일
+    private int topAmt = 0; // 상의 예산 금액
+    private int bottomAmt = 0; // 하의 예산 금액
+    private int shoesAmt = 0; // 신발 예산 금액
 
     @Column(length = 2)
-    private String delFlag;
+    private String sex = ""; // 성별 0:남성, 1:여성, 2:기타
+    private String brnd = ""; // 선호브랜드
+    private String style = ""; // 선호스타일
+
+    @Column(length = 2)
+    private String delFlag = "";
+
+    @Transient
+    private List<ProductDTO> productList = new ArrayList<>();
 
     public String getSexNm() {
         if(sex.equals("0")) {
