@@ -140,12 +140,11 @@
             if (confirm("추가로 추천을 받아보시겠어요?")) {
                 $.ajax({
                     type: "POST",
-                    url: "/reCommand/list",
-                    data: {
-                        "pickCd": pickCd
-                    },
+                    url: "/openai/create-recommend-product",
+                    data: ${jsonRequest},
                     success: function (data) {
-                        reGPT(data);
+                        alert(data);
+                        //reGPT(data);
                     },
                     error: function (xhr, status, error) {
                         // 요청 실패 시 처리
@@ -158,18 +157,6 @@
             }
         }
 
-        function reGPT(data) {
-            $.ajax({
-                type: "POST",
-                url: "/reGPT/pick",
-                data: {
-                    "gptJson": JSON.stringify(data)
-                },
-                success: function (data) {
-                    location.reload(); // 페이지 새로고침
-                }
-            });
-        }
     </script>
 </body>
 

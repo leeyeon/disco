@@ -6,6 +6,8 @@ import com.startup.disco.model.ProductDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -13,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @Slf4j
@@ -79,6 +83,19 @@ public class FrontController {
 
         List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO);
 
+        List<String> productStringList = new ArrayList<>();
+        if(!productDTOList.isEmpty()) {
+            productStringList = productDTOList.stream()
+                    .map(ProductDTO::getProductCd) // 필드 이름을 원하는 필드로 대체하세요
+                    .collect(Collectors.toList());
+            pickDTO.setProductList(productStringList); // 기추천받은 상품목록 세팅
+        }
+
+        JSONArray jsonArray = new JSONArray();
+        JSONObject response = new JSONObject();
+        response.put("pickCd", pickCd);
+        response.put("productDTOList", new JSONArray(productDTOList));
+        model.addAttribute("jsonRequest", response.toString());
         model.addAttribute("productDTOList", productDTOList);
 
         return "myPickResult";

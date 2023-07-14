@@ -15,6 +15,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -61,10 +62,17 @@ public class DiscoController {
 
     @ApiOperation(value = "OPENAI 상품추천 결과")
     @PostMapping("/openai/create-recommend-product")
-    public List<ProductDTO> createRecommendProduct(@RequestParam(value = "pickCd", required = true) long pickCd,
-            @RequestParam(value = "productList", required = false) List<String> productList) {
+    public List<ProductDTO> reCommandList(@RequestParam(value = "pickCd", required = true) long pickCd,
+                                          @RequestParam(value = "productDTOList", required = false) List<ProductDTO> productList) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
-        pickDTO.setProductList(productList); // 기추천받은 상품목록 세팅
+
+        if(productList != null && !productList.isEmpty()) {
+            List<String> productStringList = productList.stream()
+                    .map(ProductDTO::getProductCd) // 필드 이름을 원하는 필드로 대체하세요
+                    .collect(Collectors.toList());
+            pickDTO.setProductList(productStringList); // 기추천받은 상품목록 세팅
+        }
+
         return openAIApiDelegate.createRecommend(pickDTO);
     }
 
@@ -140,22 +148,4 @@ public class DiscoController {
         return "jsonView";
 
     }
-
-    @ApiOperation(value = "현재 추천받은 api")
-    @PostMapping("/reCommand/list")
-    public String reCommandList(@RequestParam(value = "pickCd", required = true) long pickCd) {
-        PickDTO pickDTO = discoService.selectPick(pickCd);
-        System.out.println(pickDTO);
-        List<ProductDTO> productDTOList = discoService.allProductList();
-        System.out.println(productDTOList);
-
-        JSONArray jsonArray = new JSONArray();
-        JSONObject response = new JSONObject();
-        response.put("pickDTO", new JSONObject(pickDTO));
-        response.put("productDTOList", new JSONArray(productDTOList));
-        jsonArray.put(response);
-
-        return jsonArray.toString();
-    }
-
 }
