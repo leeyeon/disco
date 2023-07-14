@@ -17,7 +17,7 @@ public interface DiscoService {
     PickDTO selectPick(Long pickCd);
     void deletePick(Long pickCd);
     List<PickDTO> allSelectPick(String userId) throws BaseException;
-    void insertPick(Integer bottomAmt, String delFlag, String brnd, String pickNm, String sex, Integer shoseAmt, String style, Integer topAmt, String userId);
+    void insertPick(Integer bottomAmt, String delFlag, String brnd, String pickNm, String sex, String style, Integer topAmt, String userId);
 
     List<ProductDTO> allProductList() throws BaseException;
 }

@@ -117,13 +117,15 @@
                 var pickStyle = "";
                 for(var i = 1; i<12; i++){
                     if(check[i-1] == '1'){
-                        pickStyle += styleList[i-1]+',';
+                        pickStyle += styleList[i-1];
+                        if(i < 11 && check[i] == '1'){
+                            pickStyle += ',';
+                        }
                     }
                 }
                 form_data += '&style='+pickStyle;
                 console.log("~~~~~~ : "+form_data);
                 s_ajax(form_data);
-
             });
 
             $('.btn-2').click(function(){
@@ -197,15 +199,14 @@
              var sum2 = parseInt(0);
              var topWearAmt = $("#topWear").val();
              var bottomAmt = $("#bottom").val();
-             var shoseAmt = $("#shose").val();
 
-             sum2 = Number(topWearAmt) + Number(bottomAmt) + Number(shoseAmt);
+             sum2 = Number(topWearAmt) + Number(bottomAmt);
              console.log(sum2);
              $("#totalSum").val(sum2);
          }
          function s_ajax(form_data) {
               $.ajax({
-                 url: "insertPick",
+                 url: "/insertPick",
                  type: "POST",
                  data: form_data,
                  success: function(data){
@@ -333,9 +334,6 @@
                       </div>
                       <div>
                       <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input class="popup-input" style="width:250px;" type="number" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
-                      </div>
-                      <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblShose">신발</label>  <input class="popup-input" style="width:250px;" type="number" name="shose" id="shose"  onkeyup="getTotalsSum();" /><br/>
                       </div>
                   <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" style="text-align:center; border:none;" disabled/> 원 </h5>
                   <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>

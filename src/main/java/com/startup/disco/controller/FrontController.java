@@ -43,7 +43,6 @@ public class FrontController {
     @RequestMapping(value = "/insertPick", method = { RequestMethod.POST })
     public String insertPick(@RequestParam("pickNm") String pickNm,
                              @RequestParam("bottom") Integer bottomAmt,
-                             @RequestParam("shose") Integer shoseAmt,
                              @RequestParam("favBrand") String brnd,
                              @RequestParam("sex") String sex,
                              @RequestParam("style") String style,
@@ -56,7 +55,7 @@ public class FrontController {
         String delFlag = "N";
         String userId = "USER1";
 
-        discoService.insertPick(bottomAmt, delFlag, brnd, pickNm, sex, shoseAmt, style, topAmt, userId);
+        discoService.insertPick(bottomAmt, delFlag, brnd, pickNm, sex, style, topAmt, userId);
 
         //model.addAttribute("pickDTOList", pickDTOList);
         //model.addAttribute("msg", "저장되낭");
