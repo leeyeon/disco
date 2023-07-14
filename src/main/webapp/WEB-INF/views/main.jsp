@@ -161,30 +161,9 @@
                 });
         }
 
-        function showPick(pick, pickNm) {
-                //json으로 DTO 넘겨주기
-                var jsonData = pick.substring(pick.indexOf("(") + 1, pick.lastIndexOf(")")); // 괄호 내의 문자열 추출
-                var keyValuePairs = jsonData.split(", "); // 키-값 쌍으로 분리
-
-                var pickDTOJson = {};
-                for (var i = 0; i < keyValuePairs.length; i++) {
-                  var pair = keyValuePairs[i].split("=");
-                  var key = pair[0].trim();
-                  var value = pair[1].trim();
-                  pickDTOJson[key] = value;
-                }
-
+        function showPick(pickCd, pickNm) {
             if (confirm("선택하신 [" + pickNm + "] 를/을 상품 추천을 받아보시겠어요?")) {
-                $.ajax({
-                    type: "POST",
-                    url: "/GPT/pick",
-                    data: {
-                        "pickDTOJson": JSON.stringify(pickDTOJson)
-                    },
-                    success: function (data) {
-                    openResizableWindow('/myPickResult', 1000, 700);
-                    }
-                });
+                openResizableWindow('/myPickResult?pickCd='+pickCd, 1000, 700);
             } else {
                 alert("취소하였습니다");
             }
@@ -260,7 +239,7 @@
                                                 </c:if>
                                                     <div class="card-body">
                                                         <div class="row no-gutters align-items-center">
-                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick}','${pick.pickNm}');">
+                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.productList}','${pick.pickNm}');">
                                                                 <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                                     ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
                                                                 </div>

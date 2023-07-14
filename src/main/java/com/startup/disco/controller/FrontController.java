@@ -1,5 +1,6 @@
 package com.startup.disco.controller;
 
+import com.startup.disco.delegate.OpenAIApiDelegate;
 import com.startup.disco.model.PickDTO;
 import com.startup.disco.model.ProductDTO;
 import com.startup.disco.service.DiscoService;
@@ -17,6 +18,9 @@ import java.util.List;
 @Controller
 @Slf4j
 public class FrontController {
+
+    @Autowired
+    OpenAIApiDelegate openAIApiDelegate;
 
     @Autowired
     DiscoService discoService;
@@ -64,8 +68,9 @@ public class FrontController {
     }
 
     @GetMapping("/myPickResult")
-    public String myPickResult(Model model) {
-        List<ProductDTO> productDTOList = discoService.allProductList();
+    public String myPickResult(Model model, @RequestParam(value = "pickCd", required = true) long pickCd) {
+        PickDTO pickDTO = discoService.selectPick(pickCd);
+        List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO);
 
         model.addAttribute("productDTOList", productDTOList);
 
