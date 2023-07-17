@@ -48,8 +48,12 @@ public class DiscoController {
 
     @ApiOperation(value = "OPENAI 재 상품추천 결과")
     @PostMapping("/openai/create-recommend-product")
-    public List<ProductDTO> reCommandList(@RequestParam(value = "pickCd", required = true) long pickCd,
-                                          @RequestParam(value = "productDTOList", required = false) List<ProductDTO> productDTOList) {
+    public List<ProductDTO> reCommandList(@RequestBody ReSearchDTO reSearchDTO) {
+
+        Long pickCd = reSearchDTO.getPickCd();
+        List<ProductDTO> productDTOList = reSearchDTO.getProductDTOList();
+        System.out.println("pickCd : " + pickCd);
+
         PickDTO pickDTO = discoService.selectPick(pickCd);
 
         if(productDTOList != null && !productDTOList.isEmpty()) {

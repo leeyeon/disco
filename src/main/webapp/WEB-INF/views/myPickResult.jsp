@@ -110,6 +110,10 @@
 
     <script>
         $(document).ready(function() {
+            setImage();
+        });
+
+        function setImage() {
             $('[imageProduct]').each(function() {
                 var productCd = $(this).attr('imageProduct');
                 var secondLastChar = productCd.substring(productCd.length - 2, productCd.length - 1);
@@ -125,7 +129,7 @@
                     "background-size": "cover"
                 });
             });
-        });
+        }
 
         function showProduct(productCd, productName) {
             if (confirm("선택하신 [" + productName + "] 로/으로 바로 가볼까요?")) {
@@ -141,7 +145,9 @@
                 $.ajax({
                     type: "POST",
                     url: "/openai/create-recommend-product",
-                    data: ${gptResposeData},
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify(${gptResposeData}),
                     success: function (data) {
                         // 데이터를 성공적으로 받아왔을 때 처리 로직
                         if (data && data.length > 0) {
@@ -156,18 +162,22 @@
                                     var product = data[j];
                                     alert(product);
                                     console.log(product);
-                                    newProductHtml += `
-                                        <div class="col-xl-4 col-md-6 mb-2" id="product${product.productCd}">
-                                            <div class="card border-left-warning shadow h-100">
-                                                <div class="card-body">
-                                                    <div class="row no-gutters">
-                                                        <div class="col-4 mr-2" style="cursor: pointer;" onClick="showProduct('${product.productCd}','${product.productName}');">
-                                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                #${product.division} #${product.brndNm} <br> #${product.price}원
-                                                            </div>
-                                                            <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">${product.productName}</div>
+
+                                    var title = '#'+product.division+' #'+product.brndNm+' <br> #'+product.price+'원';
+
+                                    newProductHtml += '<div class="col-xl-4 col-md-6 mb-2" id="product'+product.productCd+'">'
+                                        + '<div class="card border-left-warning shadow h-100">'
+                                        + '       <div class="card-body">'
+                                        + '           <div class="row no-gutters">'
+                                        + '              <div class="col-4 mr-2" style="cursor: pointer;"'
+                                        + "onClick=showProduct('"+product.productCd+"','"+product.productName+"');"
+                                        + '> <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">'+title;
+                                    newProductHtml += `     </div>
+                                                            <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">`+product.productName+`</div>
                                                         </div>
-                                                        <div class="col-6 d-none d-md-block bg-login-image" style="height: 300px; background-size: contain;" id="productImage${product.productCd}" imageProduct="${product.productCd}"></div>
+                                                        <div class="col-6 d-none d-md-block bg-login-image" style="height: 300px; background-size: contain;"`
+                                                   + 'id="productImage'+product.productCd+'" imageProduct="'+product.productCd+'"></div>';
+                                    newProductHtml += `
                                                     </div>
                                                 </div>
                                             </div>
@@ -181,6 +191,8 @@
                             }
 
                             $("#productCarousel .carousel-inner").append(newProductHtml);
+
+                            setImage(); // 더현대이미지 세팅
 
                             // 기존 Carousel 갱신
                             $("#productCarousel").carousel("next");
