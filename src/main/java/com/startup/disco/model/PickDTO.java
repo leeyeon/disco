@@ -42,7 +42,7 @@ public class PickDTO {
     private String delFlag = "";
 
     @Transient
-    private List<String> productList;
+    private List<String> productCdList;
 
     @Transient
     private int recommendCnt = 2; // 상품 픽 개수 (디폴트 2)

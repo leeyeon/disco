@@ -36,7 +36,7 @@
                                     <div class="col-auto" style="margin: 0 auto;">
                                         <h1 style="margin-left:50px;" class="h4 text-gray-600 mb-4">MY PICK RESULT</h1>
                                     </div>
-                                    <div class="col-auto" onClick="reProduct('${productDTOList}', '${productDTOList[0].pickCd}');">
+                                    <div class="col-auto" onClick="reProduct();">
                                         <a href="#" class="btn btn-primary btn-circle">
                                             <i class="fas fa-search fa-fw"></i>
                                         </a>
@@ -136,15 +136,55 @@
             }
         }
 
-        function reProduct(productDTOList, pickCd) {
+        function reProduct() {
             if (confirm("추가로 추천을 받아보시겠어요?")) {
                 $.ajax({
                     type: "POST",
                     url: "/openai/create-recommend-product",
-                    data: ${jsonRequest},
+                    data: ${gptResposeData},
                     success: function (data) {
-                        alert(data);
-                        //reGPT(data);
+                        // 데이터를 성공적으로 받아왔을 때 처리 로직
+                        if (data && data.length > 0) {
+                            // 새로운 상품 정보를 기존 상품 목록에 추가
+                            var newProductHtml = '';
+                            for (var i = 0; i < data.length; i += 2) {
+                                newProductHtml += `
+                                    <div class="carousel-item">
+                                        <div class="row">
+                                `;
+                                for (var j = i; j < i + 2 && j < data.length; j++) {
+                                    var product = data[j];
+                                    alert(product);
+                                    console.log(product);
+                                    newProductHtml += `
+                                        <div class="col-xl-4 col-md-6 mb-2" id="product${product.productCd}">
+                                            <div class="card border-left-warning shadow h-100">
+                                                <div class="card-body">
+                                                    <div class="row no-gutters">
+                                                        <div class="col-4 mr-2" style="cursor: pointer;" onClick="showProduct('${product.productCd}','${product.productName}');">
+                                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                #${product.division} #${product.brndNm} <br> #${product.price}원
+                                                            </div>
+                                                            <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">${product.productName}</div>
+                                                        </div>
+                                                        <div class="col-6 d-none d-md-block bg-login-image" style="height: 300px; background-size: contain;" id="productImage${product.productCd}" imageProduct="${product.productCd}"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                }
+                                newProductHtml += `
+                                        </div>
+                                    </div>
+                                `;
+                            }
+
+                            $("#productCarousel .carousel-inner").append(newProductHtml);
+
+                            // 기존 Carousel 갱신
+                            $("#productCarousel").carousel("next");
+                        }
                     },
                     error: function (xhr, status, error) {
                         // 요청 실패 시 처리

@@ -6,19 +6,15 @@ import com.startup.disco.model.ProductDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.util.ObjectUtils;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -26,18 +22,8 @@ import java.util.stream.Collectors;
 public class DiscoController {
     @Autowired
     OpenAIApiDelegate openAIApiDelegate;
-
     @Autowired
     DiscoService discoService;
-
-    @ApiOperation(value = "상품 조회")
-    @GetMapping("/select/product/{productCd}")
-    public ResponseEntity<List<String>> selectProduct (@PathVariable String productCd) throws Exception {
-        if(StringUtils.isEmpty(productCd)){
-            throw new Exception("GPT productCd 없음");
-        }
-        return ResponseEntity.ok(discoService.selectByProductCd(productCd));
-    }
 
     @ApiOperation(value = "Pick 삭제")
     @PostMapping("/delete/pick")
@@ -60,66 +46,22 @@ public class DiscoController {
                 ).collect(Collectors.joining("\n"));
     }
 
-    @ApiOperation(value = "OPENAI 상품추천 결과")
+    @ApiOperation(value = "OPENAI 재 상품추천 결과")
     @PostMapping("/openai/create-recommend-product")
     public List<ProductDTO> reCommandList(@RequestParam(value = "pickCd", required = true) long pickCd,
-                                          @RequestParam(value = "productDTOList", required = false) List<ProductDTO> productList) {
+                                          @RequestParam(value = "productDTOList", required = false) List<ProductDTO> productDTOList) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
 
-        if(productList != null && !productList.isEmpty()) {
-            List<String> productStringList = productList.stream()
+        if(productDTOList != null && !productDTOList.isEmpty()) {
+            List<String> productCdList = productDTOList.stream()
                     .map(ProductDTO::getProductCd) // 필드 이름을 원하는 필드로 대체하세요
                     .collect(Collectors.toList());
-            pickDTO.setProductList(productStringList); // 기추천받은 상품목록 세팅
+            pickDTO.setProductCdList(productCdList); // 기추천받은 상품목록 세팅
         }
 
-        return openAIApiDelegate.createRecommend(pickDTO);
-    }
+        //return openAIApiDelegate.createRecommend(pickDTO); //gpt연결 x
 
-    @ApiOperation(value = "gpt 임시 api")
-    @PostMapping("/GPT/pick")
-    public String GPTPick(@RequestParam(value = "pickDTOJson", required = true) Object pickDTOJson) {
-
-        System.out.println(pickDTOJson);
-
-        List<ProductDTO> productDTOList = List.of(
-                new ProductDTO() {{
-                    setProductCd("2152090539");
-                    setProductName("[톰보이] 숏 리버시블 무스탕");
-                    setDivision("상의");
-                    setPrice(String.valueOf(119700));
-                    setBrndCd("002331");
-                    setBrndNm("톰보이(백화점)");
-                    setPickCd(1);
-                    setUserId("USER1");
-                    setSex("1");
-                }},
-                new ProductDTO() {{
-                    setProductCd("2152078631");
-                    setProductName("톰보이 9173331971 백밴딩 원턱 와이드데님");
-                    setDivision("하의");
-                    setPrice(String.valueOf(129000));
-                    setBrndCd("002331");
-                    setBrndNm("톰보이(백화점)");
-                    setPickCd(1);
-                    setUserId("USER1");
-                    setSex("1");
-                }}
-        );
-
-        discoService.insertProduct(productDTOList);
-
-        return "jsonView";
-
-    }
-
-    @ApiOperation(value = "재 호출 gpt 임시 api")
-    @PostMapping("/reGPT/pick")
-    public String reGPTPick(@RequestParam(value = "gptJson", required = true) Object gptJson) {
-
-        System.out.println(gptJson);
-
-        List<ProductDTO> productDTOList = List.of(
+        return List.of(
                 new ProductDTO() {{
                     setProductCd("2151567416");
                     setProductName("톰보이 TOMBOY  코튼 린넨 셔츠원피스 (9103241435)");
@@ -129,6 +71,7 @@ public class DiscoController {
                     setBrndNm("톰보이(백화점)");
                     setPickCd(1);
                     setUserId("USER1");
+                    setSex("1");
                 }},
                 new ProductDTO() {{
                     setProductCd("2151565519");
@@ -142,10 +85,5 @@ public class DiscoController {
                     setSex("1");
                 }}
         );
-
-        discoService.insertProduct(productDTOList);
-
-        return "jsonView";
-
     }
 }

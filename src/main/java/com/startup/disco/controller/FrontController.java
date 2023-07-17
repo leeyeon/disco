@@ -55,18 +55,11 @@ public class FrontController {
                              @RequestParam("sex") String sex,
                              @RequestParam("style") String style,
                              @RequestParam("topWear") Integer topAmt) {
-        //pickDTO.setPickNm(pickNm);
 
-        System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+pickNm);
-        System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+bottomAmt);
-        System.out.println("!!!!!!!!!!!!!!@@!~~~ :"+style);
         String delFlag = "N";
         String userId = "USER1";
 
         discoService.insertPick(bottomAmt, delFlag, brnd, pickNm, sex, style, topAmt, userId);
-
-        //model.addAttribute("pickDTOList", pickDTOList);
-        //model.addAttribute("msg", "저장되낭");
 
         return "main";
     }
@@ -81,21 +74,45 @@ public class FrontController {
     public String myPickResult(Model model, @RequestParam(value = "pickCd", required = true) long pickCd) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
 
-        List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO);
+        //List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO); //gpt연결 x
+
+        List<ProductDTO> productDTOList = List.of(
+                new ProductDTO() {{
+                    setProductCd("2152090539");
+                    setProductName("[톰보이] 숏 리버시블 무스탕");
+                    setDivision("상의");
+                    setPrice(String.valueOf(119700));
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setUserId("USER1");
+                    setSex("1");
+                }},
+                new ProductDTO() {{
+                    setProductCd("2152078631");
+                    setProductName("톰보이 9173331971 백밴딩 원턱 와이드데님");
+                    setDivision("하의");
+                    setPrice(String.valueOf(129000));
+                    setBrndCd("002331");
+                    setBrndNm("톰보이(백화점)");
+                    setPickCd(1);
+                    setUserId("USER1");
+                    setSex("1");
+                }}
+        );
 
         List<String> productStringList = new ArrayList<>();
         if(!productDTOList.isEmpty()) {
             productStringList = productDTOList.stream()
                     .map(ProductDTO::getProductCd) // 필드 이름을 원하는 필드로 대체하세요
                     .collect(Collectors.toList());
-            pickDTO.setProductList(productStringList); // 기추천받은 상품목록 세팅
+            pickDTO.setProductCdList(productStringList); // 기추천받은 상품목록 세팅
         }
 
-        JSONArray jsonArray = new JSONArray();
-        JSONObject response = new JSONObject();
-        response.put("pickCd", pickCd);
-        response.put("productDTOList", new JSONArray(productDTOList));
-        model.addAttribute("jsonRequest", response.toString());
+        JSONObject gptResposeData = new JSONObject();
+        gptResposeData.put("pickCd", pickCd);
+        gptResposeData.put("productDTOList", new JSONArray(productDTOList));
+        model.addAttribute("gptResposeData", gptResposeData.toString());
         model.addAttribute("productDTOList", productDTOList);
 
         return "myPickResult";
