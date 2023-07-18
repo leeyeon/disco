@@ -20,6 +20,87 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.css" rel="stylesheet">
     <link href="css/custom.css" rel="stylesheet">
+
+     <style>
+      /* Your existing styles ... */
+
+         /* 추가: 오버레이 스타일 */
+         #loading-overlay {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             background-color: rgba(0, 0, 0, 0.7); /* Adjust the transparency as needed */
+             z-index: 9998; /* Make sure the overlay appears below the loading message and bar */
+             display: none; /* Hide the overlay by default */
+         }
+
+         /* 추가: 로딩 바 메시지 스타일 */
+         #loading-message {
+             position: fixed;
+             top: 50%;
+             left: 50%;
+             transform: translate(-50%, -50%);
+             z-index: 9999;
+             display: none; /* Hide the loading message by default */
+         }
+
+         /* 추가: 로딩 바 스타일 */
+         #loading-bar {
+             position: fixed;
+             top: 55%; /* Adjust the position as needed */
+             left: 0;
+             width: 100%;
+             height: 4px;
+             background-color: #ddd;
+             z-index: 9999; /* Make sure the loading bar appears on top of the overlay */
+             display: none; /* Hide the loading bar by default */
+         }
+
+         #loading-bar .progress-bar {
+             height: 100%;
+             background-color: #4e73df;
+             animation: loading 2s linear infinite;
+         }
+
+         @keyframes loading {
+             0% { width: 0; }
+             50% { width: 50%; }
+         }
+
+         @keyframes blink {
+             0% {
+                 opacity: 0.2;
+             }
+             50% {
+                 opacity: 1;
+             }
+             100% {
+                 opacity: 0.2;
+             }
+         }
+
+         .blink-message {
+             animation: blink 2s linear infinite;
+         }
+
+         /* CSS 코드 */
+         .carousel-control-prev,
+         .carousel-control-next {
+           width: 50px; /* 너비 조정 */
+         }
+
+         /* 아이콘 색상 설정 (예시로 빨간색으로 설정) */
+         .carousel-control-prev-icon {
+           background-image: url('previous-icon-url.png'); /* 이전 아이콘 이미지 URL 입력 */
+         }
+
+         .carousel-control-next-icon {
+           background-image: url('next-icon-url.png'); /* 다음 아이콘 이미지 URL 입력 */
+         }
+
+     </style>
 </head>
 
 <body>
@@ -64,9 +145,11 @@
                                                             <div class="row no-gutters">
                                                                 <div class="col-4 mr-2" style="cursor: pointer;" onClick="showProduct('${product.productCd}','${product.productName}');">
                                                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                        #${product.division} #${product.brndNm} <br> #${product.price}원
+                                                                        #${product.division} <br>
+                                                                        #${product.brndNm} <br>
+                                                                        #${product.price}원
                                                                     </div>
-                                                                    <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">${product.productName}</div>
+                                                                    <div class="h4 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;"> ${product.productName} </div>
                                                                 </div>
                                                                 <div class="col-6 d-none d-md-block bg-login-image" style="height: 300px; background-size: contain;" id="productImage${product.productCd}" imageProduct="${product.productCd}"></div>
                                                             </div>
@@ -108,9 +191,24 @@
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
 
+    <!-- 추가: 로딩 바 메시지 -->
+    <div id="loading-message" class="text-center" style="display: none;">
+        <h5>gpt가 당신의 스타일을 추천중입니다</h5>
+    </div>
+
+    <!-- 추가: 로딩 바 및 어두운 배경을 감싸는 오버레이 -->
+    <div id="loading-overlay" style="display: none;">
+        <div id="loading-bar" class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
+        </div>
+    </div>
+
+
     <script>
         $(document).ready(function() {
             setImage();
+
+            makeMessageBlink();
         });
 
         function setImage() {
@@ -131,6 +229,12 @@
             });
         }
 
+        // 메세지를 반짝거리게 만드는 함수
+        function makeMessageBlink() {
+            var messageElement = $("#loading-message");
+            messageElement.addClass("blink-message");
+        }
+
         function showProduct(productCd, productName) {
             if (confirm("선택하신 [" + productName + "] 로/으로 바로 가볼까요?")) {
                 var link = "https://www.thehyundai.com/front/pda/itemPtc.thd?slitmCd=" + productCd + "&sectId=&bfp=SearchList";
@@ -142,6 +246,11 @@
 
         function reProduct() {
             if (confirm("추가로 추천을 받아보시겠어요?")) {
+                // 텍스트 메시지를 보여주고 로딩 바를 표시
+                $("#loading-overlay").fadeIn();
+                $("#loading-message").fadeIn();
+                $("#loading-bar").fadeIn();
+
                 $.ajax({
                     type: "POST",
                     url: "/openai/create-recommend-product",
@@ -160,17 +269,14 @@
                                 `;
                                 for (var j = i; j < i + 2 && j < data.length; j++) {
                                     var product = data[j];
-                                    alert(product);
-                                    console.log(product);
-
-                                    var title = '#'+product.division+' #'+product.brndNm+' <br> #'+product.price+'원';
+                                    var title = '#'+product.division+' <br> #'+product.brndNm+' <br> #'+product.price+'원';
 
                                     newProductHtml += '<div class="col-xl-4 col-md-6 mb-2" id="product'+product.productCd+'">'
                                         + '<div class="card border-left-warning shadow h-100">'
                                         + '       <div class="card-body">'
                                         + '           <div class="row no-gutters">'
                                         + '              <div class="col-4 mr-2" style="cursor: pointer;"'
-                                        + "onClick=showProduct('"+product.productCd+"','"+product.productName+"');"
+                                        + "onClick=\"showProduct('" + product.productCd + "','" + product.productName + "');\""
                                         + '> <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">'+title;
                                     newProductHtml += `     </div>
                                                             <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">`+product.productName+`</div>
@@ -196,6 +302,12 @@
 
                             // 기존 Carousel 갱신
                             $("#productCarousel").carousel("next");
+
+                            // 로딩 바를 숨김
+                            $("#loading-overlay").fadeOut();
+                            $("#loading-message").fadeOut();
+                            $("#loading-bar").fadeOut();
+
                         }
                     },
                     error: function (xhr, status, error) {
@@ -210,6 +322,7 @@
         }
 
     </script>
+
 </body>
 
 </html>
