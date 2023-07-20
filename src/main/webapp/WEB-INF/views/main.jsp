@@ -92,7 +92,9 @@
     </script>
 
 </head>
-<body class="bg-gradient-primary-main">
+
+
+<body>
     <script>
     var check = new Array();
     var styleList = new Array();
@@ -199,16 +201,21 @@
 
      </script>
 
-    <div class="container">
 
-        <div class="row" style="margin-top: 38px; margin-left: 270px;">
+
+     <div style="position:relative;">
+
+        <div class="row" style="margin-top: 38px; margin-left: 650px; position:absolute;left:0;top:0; ">
             <a href="#" class="btn btn-info btn-circle" id="disco-module-onoff">
                 <i class="fas fa-info-circle"></i>
             </a>
         </div>
 
+        <iframe width="1920" height="2000" src="https://www.thehyundai.com/Home.html"  frameborder="0"></iframe>
+
         <!-- Outer Row  -->
-        <div class="row justify-content-center" id="disco-module" style="display:none;">
+        <div class="row justify-content-center" id="disco-module"
+        style="display:none; margin-top: 38px; margin-left: 200px; width: 1200px; position:absolute;left:0;top:0;">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
                 <div class="card o-hidden border-0 shadow-lg my-5">
