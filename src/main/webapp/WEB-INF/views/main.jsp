@@ -100,8 +100,6 @@
     var styleList = new Array();
     check = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-    console.log("~~~~~~styleList :"+styleList);
-
         $(document).ready(function() {
             $("#disco-module-onoff").on("click", function() {
                 $("#disco-module").toggle();
@@ -115,13 +113,13 @@
                 $("#add-card-module").hide();
             });
 
-            $("#form_submit").on('click', function(){
+            $("#form_submit").on('click', function() {
                 let form_data = $("#pickDetail").serialize();
                 var pickStyle = "";
-                for(var i = 0; i<14; i++){
-                    if(check[i] == '1'){
+                for (var i = 0; i < 14; i++) {
+                    if (check[i] == '1') {
                         pickStyle += styleList[i];
-                        if(i < 11 && check[i] == '1'){
+                        if (i < 11 && check[i] == '1') {
                             pickStyle += ',';
                         }
                     }
@@ -130,9 +128,47 @@
                 if (pickStyle.endsWith(',')) {
                     pickStyle = pickStyle.slice(0, -1);
                 }
-                form_data += '&style='+pickStyle;
-                console.log("~~~~~~ : "+form_data);
-                s_ajax(form_data);
+                form_data += '&style=' + pickStyle;
+
+                $.ajax({
+                    url: "/insertPick",
+                    type: "POST",
+                    data: form_data,
+                    success: function(res) {
+                        alert("PICK이 등록되었습니다.");
+                        // 성공 시 사용자별 PICK 목록에 새로운 PICK 카드를 추가합니다.
+                        var pickCard = '<div class="row mb-2" id="pick' + res.pickCd + '">' +
+                            '<div class="col-xl-12 col-md-12">' +
+                            '<div class="card border-left-warning shadow h-100">' +
+                            '<div class="card-body">' +
+                            '<div class="row no-gutters align-items-center">' +
+                            '<div class="col mr-2" style="cursor: pointer;" onClick="showPick(\'' + res.pickCd + '\',\'' + res.pickNm + '\');">' +
+                            '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">' +
+                            res.sexNm + ', ' + res.style + ', 예산 ' + res.totalAmt + '원' +
+                            '</div>' +
+                            '<div class="h5 mb-0 font-weight-bold text-gray-800">' + res.pickNm + '</div>' +
+                            '</div>' +
+                            '<div class="col-auto" onClick="delPick(\'' + res.pickCd + '\',\'' + res.pickNm + '\');">' +
+                            '<a href="#" class="btn btn-danger btn-circle">' +
+                            '<i class="fas fa-trash"></i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+
+                        $("#pickList").append(pickCard); // pickCard를 사용자별 PICK 목록에 추가
+
+                        $('#add-card-module').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert("통신 실패.");
+                    }
+                });
+
+                return false;
             });
 
             $('.btn-2').click(function(){
@@ -191,21 +227,7 @@
              var bottomAmt = $("#bottom").val();
 
              sum2 = Number(topWearAmt) + Number(bottomAmt);
-             console.log(sum2);
              $("#totalSum").val(sum2);
-         }
-         function s_ajax(form_data) {
-              $.ajax({
-                 url: "/insertPick",
-                 type: "POST",
-                 data: form_data,
-                 success: function(data){
-                    alert("저장되었습니다.");
-                 },
-                 error: function (request, status, error){
-                    alert("저장에 실패하였습니다.");
-                 }
-             });
          }
 
      </script>
@@ -243,38 +265,39 @@
 
                                     <hr>
 
-                                    <!-- [S] 사용자별 PICK 목록 -->
-                                    <c:forEach var="pick" items="${pickDTOList}" varStatus="status">
-                                        <div class="row mb-2" id="pick${pick.pickCd}">
-                                            <div class="col-xl-12 col-md-12">
-                                                <c:if test="${status.index % 2 eq 0}">
-                                                    <div class="card border-left-warning shadow h-100">
-                                                </c:if>
-                                                <c:if test="${status.index % 2 eq 1}">
-                                                    <div class="card border-left-dark shadow h-100">
-                                                </c:if>
-                                                    <div class="card-body">
-                                                        <div class="row no-gutters align-items-center">
-                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.pickNm}');">
-                                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                    ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
+                                    <div id="pickList">
+                                        <!-- [S] 사용자별 PICK 목록 -->
+                                        <c:forEach var="pick" items="${pickDTOList}" varStatus="status">
+                                            <div class="row mb-2" id="pick${pick.pickCd}">
+                                                <div class="col-xl-12 col-md-12">
+                                                    <c:if test="${status.index % 2 eq 0}">
+                                                        <div class="card border-left-warning shadow h-100">
+                                                    </c:if>
+                                                    <c:if test="${status.index % 2 eq 1}">
+                                                        <div class="card border-left-dark shadow h-100">
+                                                    </c:if>
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.pickNm}');">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                        ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
+                                                                    </div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
                                                                 </div>
-                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
-                                                            </div>
-                                                            <div class="col-auto" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">
-                                                                <a href="#" class="btn btn-danger btn-circle">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </a>
+                                                                <div class="col-auto" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">
+                                                                    <a href="#" class="btn btn-danger btn-circle">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </c:forEach>
+                                        </c:forEach>
+                                    </div>
 
                                     <!-- [E] 사용자별 PICK 목록 -->
-
                                     <div class="row">
                                         <div class="btn col-xl-12 col-md-12">
                                             <div class="card shadow h-100">
@@ -287,7 +310,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

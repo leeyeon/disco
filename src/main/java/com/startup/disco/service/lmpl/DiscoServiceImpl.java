@@ -21,6 +21,7 @@ public class DiscoServiceImpl implements DiscoService {
     private final PickRepository pickRepository;
     private final StyleRepository styleRepository;
 
+
     @Override
     @Transactional
     public void deletePick(Long pickCd) {
@@ -44,7 +45,7 @@ public class DiscoServiceImpl implements DiscoService {
         return pickRepository.findByPickCd(pickCd);
     }
 
-    public void insertPick (Integer bottomAmt, String delFlag, String brnd, String pickNm, String sex, String style, Integer topAmt, String userId){
+    public PickDTO insertPick (Integer bottomAmt, String delFlag, String brnd, String pickNm, String sex, String style, Integer topAmt, String userId){
 
         PickDTO pickDto = new PickDTO();
         pickDto.setPickNm(pickNm);
@@ -56,7 +57,10 @@ public class DiscoServiceImpl implements DiscoService {
         pickDto.setTopAmt(topAmt);
         pickDto.setUserId(userId);
 
-        pickRepository.save(pickDto);
+        PickDTO savedPickDto = pickRepository.save(pickDto);
+
+        // 생성된 PickCd가 포함된 수정된 PickDTO를 반환합니다.
+        return savedPickDto;
     }
     public List<StyleDTO> allSelectStyle() throws BaseException {
         List<StyleDTO> styleList = styleRepository.findAll();

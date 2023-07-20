@@ -52,23 +52,6 @@ public class FrontController {
         return "main";
     }
 
-    @ApiOperation(value = "pick 추가")
-    @RequestMapping(value = "/insertPick", method = { RequestMethod.POST })
-    public String insertPick(@RequestParam("pickNm") String pickNm,
-                             @RequestParam("bottom") Integer bottomAmt,
-                             @RequestParam("brand") String brnd,
-                             @RequestParam("sex") String sex,
-                             @RequestParam("style") String style,
-                             @RequestParam("topWear") Integer topAmt) {
-
-        String delFlag = "N";
-        String userId = "USER1";
-
-        discoService.insertPick(bottomAmt, delFlag, brnd, pickNm, sex, style, topAmt, userId);
-
-        return "main";
-    }
-
     /**
      * 검색결과
      * @param model
