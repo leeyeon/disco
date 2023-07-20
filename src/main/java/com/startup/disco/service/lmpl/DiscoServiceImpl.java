@@ -2,7 +2,9 @@ package com.startup.disco.service.lmpl;
 
 import com.startup.disco.global.BaseException;
 import com.startup.disco.model.PickDTO;
+import com.startup.disco.model.StyleDTO;
 import com.startup.disco.repository.PickRepository;
+import com.startup.disco.repository.StyleRepository;
 import com.startup.disco.service.DiscoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +19,7 @@ import java.util.List;
 public class DiscoServiceImpl implements DiscoService {
 
     private final PickRepository pickRepository;
+    private final StyleRepository styleRepository;
 
     @Override
     @Transactional
@@ -54,6 +57,15 @@ public class DiscoServiceImpl implements DiscoService {
         pickDto.setUserId(userId);
 
         pickRepository.save(pickDto);
+    }
+    public List<StyleDTO> allSelectStyle() throws BaseException {
+        List<StyleDTO> styleList = styleRepository.findAll();
+
+        if (styleList.isEmpty()) {
+            throw new BaseException("데이터 없음");
+        }else {
+            return styleList;
+        }
     }
 
 }

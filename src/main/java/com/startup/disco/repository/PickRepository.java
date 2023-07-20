@@ -10,4 +10,5 @@ public interface PickRepository extends JpaRepository<PickDTO, String> {
     PickDTO findByPickCd(long pickCd);
     void deleteByPickCd(long pickCd);
     List<PickDTO> findByUserIdAndDelFlag(String userId, String delFlag);
+
 }

@@ -3,6 +3,7 @@ package com.startup.disco.controller;
 import com.startup.disco.delegate.OpenAIApiDelegate;
 import com.startup.disco.model.PickDTO;
 import com.startup.disco.model.ProductDTO;
+import com.startup.disco.model.StyleDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -44,6 +45,10 @@ public class FrontController {
         model.addAttribute("pickDTOList", pickDTOList);
         model.addAttribute("msg", "나오낭");
 
+        List<StyleDTO> styleDTOList = discoService.allSelectStyle();
+
+        model.addAttribute("styleDTOList", styleDTOList);
+
         return "main";
     }
 
@@ -51,7 +56,7 @@ public class FrontController {
     @RequestMapping(value = "/insertPick", method = { RequestMethod.POST })
     public String insertPick(@RequestParam("pickNm") String pickNm,
                              @RequestParam("bottom") Integer bottomAmt,
-                             @RequestParam("favBrand") String brnd,
+                             @RequestParam("brand") String brnd,
                              @RequestParam("sex") String sex,
                              @RequestParam("style") String style,
                              @RequestParam("topWear") Integer topAmt) {

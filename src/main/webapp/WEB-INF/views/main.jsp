@@ -96,8 +96,9 @@
     <script>
     var check = new Array();
     var styleList = new Array();
-    check = [0,0,0,0,0,0,0,0,0,0,0];
-    styleList = ['빈티지','미니멀','비즈니스','캐주얼','레트로','페미닌','러블리','심플','모던','스트릿','클래식'];
+    check = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+    console.log("~~~~~~styleList :"+styleList);
 
         $(document).ready(function() {
             $("#disco-module-onoff").on("click", function() {
@@ -115,13 +116,17 @@
             $("#form_submit").on('click', function(){
                 let form_data = $("#pickDetail").serialize();
                 var pickStyle = "";
-                for(var i = 1; i<12; i++){
-                    if(check[i-1] == '1'){
-                        pickStyle += styleList[i-1];
+                for(var i = 0; i<14; i++){
+                    if(check[i] == '1'){
+                        pickStyle += styleList[i];
                         if(i < 11 && check[i] == '1'){
                             pickStyle += ',';
                         }
                     }
+                }
+
+                if (pickStyle.endsWith(',')) {
+                    pickStyle = pickStyle.slice(0, -1);
                 }
                 form_data += '&style='+pickStyle;
                 console.log("~~~~~~ : "+form_data);
@@ -129,14 +134,18 @@
             });
 
             $('.btn-2').click(function(){
-                 var styleId = $(this).attr("id");
-                for(var i=1; i<12; i++){
+                var styleId = $(this).attr("id");
+                var styleNm = $(this).attr("name");
+
+                for(var i=1; i<15; i++){
                  if(check[i-1] == '0' && styleId == i){
                     check[i-1] = "1";
                     $(this).addClass("btn-2-hover");
+                    styleList[i-1] = styleNm;
                  } else if(check[i-1] == '1' && styleId == i){
                     check[i-1] = "0";
                     $(this).removeClass("btn-2-hover");
+                    styleList[i-1] = "";
                  }
                 }
             });
@@ -267,6 +276,7 @@
                                                         <i class="fa fa-plus"></i>
                                                     </div>
                                                 </div>
+                                            </form>
                                             </div>
                                         </div>
                                     </div>
@@ -321,68 +331,15 @@
                   </div>
                   <div>
                   <h5 align="center" style="padding:10px;">선호 스타일 (*복수선택가능)</h5>
+
                   <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <input type="button" name="favStyle1" id="1"  class="custom-btn btn-2" value="빈티지" style="margin:5px;">
+                    <c:forEach var="style" items="${styleDTOList}" varStatus="status">
+                        <li class="nav-item">
+                            <input type="button" id="${style.styleCd}" name="${style.style}" class="custom-btn btn-2" value="${style.style}" style="margin:5px;">
                             <span></span>
-                        </input>
-                    </li>
-                    <li class="nav-item">
-                        <input type="button" name="favStyle2" id="2" class="custom-btn btn-2" value="미니멀" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                    <li class="nav-item">
-                        <input type="button" name="favStyle3" id="3" class="custom-btn btn-2"value="비즈니스" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                  </ul>
-                  <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <input type="button" name="favStyle4" id="4" class="custom-btn btn-2" value="캐주얼" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                    <li class="nav-item">
-                        <input type="button" name="favStyle5" id="5" class="custom-btn btn-2" value="레트로" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                    <li class="nav-item">
-                        <input type="button" name="favStyle6" id="6" class="custom-btn btn-2"value="페미닌" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                  </ul>
-                  <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <input type="button" name="favStyle7" id="7" class="custom-btn btn-2" value="러블리" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                    <li class="nav-item">
-                        <input type="button" name="favStyle8" id="8" class="custom-btn btn-2" value="심플" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                    <li class="nav-item">
-                        <input type="button" name="favStyle9" id="9" class="custom-btn btn-2"value="모던" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                  </ul>
-                  <ul class="nav nav-pills">
-                    <li class="nav-item">
-                        <input type="button" name="favStyle10" id="10" class="custom-btn btn-2" value="스트릿" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
-                    <li class="nav-item">
-                        <input type="button" name="favStyle11" id="11" class="custom-btn btn-2" value="클래식" style="margin:5px;">
-                            <span></span>
-                        </input>
-                    </li>
+                            </input>
+                        </li>
+                    </c:forEach>
                   </ul>
                </div>
               </div>
