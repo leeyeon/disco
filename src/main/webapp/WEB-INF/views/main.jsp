@@ -303,7 +303,7 @@
                         <label style="display:inline-block; width:100px; text-align:center;" for="pickNm">Pick 명</label>  <input class="popup-input" style="width:250px;" type="text" name="pickNm" id="pickNm" /><br/>
                       </div>
                       <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="favBrnd">선호브랜드</label>  <input class="popup-input" style="width:250px;" type="text" name="favBrand" id="favBrnd" /><br/>
+                      <label style="display:inline-block; width:100px; text-align:center;" for="brand">선호브랜드</label>  <input class="popup-input" style="width:250px;" type="text" name="brand" id="brand" /><br/>
                       </div>
                   </div>
                   <div>
@@ -316,8 +316,8 @@
                       </div>
                   <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" style="text-align:center; border:none;" disabled/> 원 </h5>
                   <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
-                    <input style="width:20px;" type="radio" name="sex" id="men" value="1" text="남성" checked /> 남성
-                    <input style="width:20px;" type="radio" name="sex" id="women" value="0" text="여성" /> 여성<br/>
+                    <input style="width:20px;" type="radio" name="sex" id="men" value="0" text="남성" checked /> 남성
+                    <input style="width:20px;" type="radio" name="sex" id="women" value="1" text="여성" /> 여성<br/>
                   </div>
                   <div>
                   <h5 align="center" style="padding:10px;">선호 스타일 (*복수선택가능)</h5>
