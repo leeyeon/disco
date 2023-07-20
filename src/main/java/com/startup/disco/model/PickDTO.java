@@ -47,6 +47,9 @@ public class PickDTO {
     @Transient
     private int recommendCnt = 2; // 상품 픽 개수 (디폴트 2)
 
+    @Transient
+    private int recommendProductCnt; // 기추천한 상품개수
+
     public String getSexNm() {
         if(sex.equals("0")) {
             return "남성";

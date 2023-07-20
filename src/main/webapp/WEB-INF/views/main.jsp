@@ -224,7 +224,7 @@
 
         <!-- Outer Row  -->
         <div class="row justify-content-center" id="disco-module"
-        style="display:none; margin-top: 38px; margin-left: 200px; width: 1200px; position:absolute;left:0;top:0;">
+        style="display:none; margin-top: 100px; margin-left: 250px; width: 1200px; position:absolute;left:0;top:0;">
 
             <div class="col-xl-10 col-lg-12 col-md-9">
                 <div class="card o-hidden border-0 shadow-lg my-5">

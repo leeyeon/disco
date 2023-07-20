@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <%@ page isELIgnored="false" language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <html>
 
@@ -104,6 +105,9 @@
 </head>
 
 <body>
+
+    <input type="hidden" id="recommendProductCnt" value="${fn:length(productDTOList)}" />
+
     <div class="container">
         <!-- Outer Row  -->
         <div class="row justify-content-center" id="disco-module">
@@ -254,12 +258,17 @@
                 $("#loading-message").fadeIn();
                 $("#loading-bar").fadeIn();
 
+                var result = {
+                    "pickCd" : ${pickCd},
+                    "recommendProductCnt" : $("#recommendProductCnt").val()
+                };
+
                 $.ajax({
                     type: "POST",
                     url: "/openai/create-recommend-product",
                     dataType: 'json',
                     contentType: 'application/json',
-                    data: JSON.stringify(${gptResposeData}),
+                    data: JSON.stringify(result),
                     success: function (data) {
                         // 데이터를 성공적으로 받아왔을 때 처리 로직
                         if (data && data.length > 0) {
@@ -305,6 +314,10 @@
 
                             // 기존 Carousel 갱신
                             $("#productCarousel").carousel("next");
+
+                            var cnt = Number($("#recommendProductCnt").val()) + 2;
+
+                            $("#recommendProductCnt").val(cnt);
 
                             // 로딩 바를 숨김
                             $("#loading-overlay").fadeOut();

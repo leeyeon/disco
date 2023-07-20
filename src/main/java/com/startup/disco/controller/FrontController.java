@@ -79,8 +79,9 @@ public class FrontController {
     public String myPickResult(Model model, @RequestParam(value = "pickCd", required = true) long pickCd) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
 
-        //List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO); //gpt연결 x
+        List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO);
 
+        /*
         List<ProductDTO> productDTOList = List.of(
                 new ProductDTO() {{
                     setProductCd("2152090539");
@@ -106,10 +107,12 @@ public class FrontController {
                 }}
         );
 
+
+
         List<String> productStringList = new ArrayList<>();
         if(!productDTOList.isEmpty()) {
             productStringList = productDTOList.stream()
-                    .map(ProductDTO::getProductCd) // 필드 이름을 원하는 필드로 대체하세요
+                    .map(ProductDTO::getProductCd)
                     .collect(Collectors.toList());
             pickDTO.setProductCdList(productStringList); // 기추천받은 상품목록 세팅
         }
@@ -118,6 +121,10 @@ public class FrontController {
         gptResposeData.put("pickCd", pickCd);
         gptResposeData.put("productDTOList", new JSONArray(productDTOList));
         model.addAttribute("gptResposeData", gptResposeData.toString());
+
+
+        */
+        model.addAttribute("pickCd", pickCd);
         model.addAttribute("productDTOList", productDTOList);
 
         return "myPickResult";

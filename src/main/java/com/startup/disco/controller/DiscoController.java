@@ -49,20 +49,26 @@ public class DiscoController {
     public List<ProductDTO> reCommandList(@RequestBody ReSearchDTO reSearchDTO) {
 
         Long pickCd = reSearchDTO.getPickCd();
-        List<ProductDTO> productDTOList = reSearchDTO.getProductDTOList();
+        //List<ProductDTO> productDTOList = reSearchDTO.getProductDTOList();
         System.out.println("pickCd : " + pickCd);
 
         PickDTO pickDTO = discoService.selectPick(pickCd);
 
+        /*
         if(productDTOList != null && !productDTOList.isEmpty()) {
             List<String> productCdList = productDTOList.stream()
                     .map(ProductDTO::getProductCd) // 필드 이름을 원하는 필드로 대체하세요
                     .collect(Collectors.toList());
             pickDTO.setProductCdList(productCdList); // 기추천받은 상품목록 세팅
+            pickDTO.setRecommendProductCnt(productCdList.size());
         }
+        */
 
-        //return openAIApiDelegate.createRecommend(pickDTO); //gpt연결 x
+        pickDTO.setRecommendProductCnt(reSearchDTO.getRecommendProductCnt()); // 기추천받은 상품개수 세팅
 
+        return openAIApiDelegate.createRecommend(pickDTO);
+
+        /*
         return List.of(
                 new ProductDTO() {{
                     setProductCd("2151567416");
@@ -87,5 +93,7 @@ public class DiscoController {
                     setSex("1");
                 }}
         );
+
+        */
     }
 }

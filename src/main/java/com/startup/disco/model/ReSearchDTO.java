@@ -16,6 +16,7 @@ import java.util.List;
 @Builder
 public class ReSearchDTO {
     private long pickCd = 0; // 픽ID
+    private int recommendProductCnt = 0; // 기 추천한 상품개수
     private List<ProductDTO> productDTOList;
 
 }
