@@ -4,6 +4,7 @@ import com.startup.disco.delegate.OpenAIApiDelegate;
 import com.startup.disco.model.PickDTO;
 import com.startup.disco.model.ProductDTO;
 import com.startup.disco.model.ReSearchDTO;
+import com.startup.disco.model.StyleDTO;
 import com.startup.disco.service.DiscoService;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,23 @@ public class DiscoController {
     OpenAIApiDelegate openAIApiDelegate;
     @Autowired
     DiscoService discoService;
+
+    @ApiOperation(value = "Pick 추가")
+    @RequestMapping(value = "/insertPick", method = { RequestMethod.POST })
+    public ResponseEntity<PickDTO> insertPick(@RequestParam("pickNm") String pickNm,
+                                             @RequestParam("bottom") Integer bottomAmt,
+                                             @RequestParam("brand") String brnd,
+                                             @RequestParam("sex") String sex,
+                                             @RequestParam("style") String style,
+                                             @RequestParam("topWear") Integer topAmt) {
+
+        String delFlag = "N";
+        String userId = "USER1";
+
+        PickDTO pickDTO = discoService.insertPick(bottomAmt, delFlag, brnd, pickNm, sex, style, topAmt, userId);
+
+        return ResponseEntity.ok(pickDTO);
+    }
 
     @ApiOperation(value = "Pick 삭제")
     @PostMapping("/delete/pick")

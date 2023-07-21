@@ -100,8 +100,6 @@
     var styleList = new Array();
     check = [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-    console.log("~~~~~~styleList :"+styleList);
-
         $(document).ready(function() {
             $("#disco-module-onoff").on("click", function() {
                 $("#disco-module").toggle();
@@ -115,13 +113,13 @@
                 $("#add-card-module").hide();
             });
 
-            $("#form_submit").on('click', function(){
+            $("#form_submit").on('click', function() {
                 let form_data = $("#pickDetail").serialize();
                 var pickStyle = "";
-                for(var i = 0; i<14; i++){
-                    if(check[i] == '1'){
+                for (var i = 0; i < 14; i++) {
+                    if (check[i] == '1') {
                         pickStyle += styleList[i];
-                        if(i < 11 && check[i] == '1'){
+                        if (i < 11 && check[i] == '1') {
                             pickStyle += ',';
                         }
                     }
@@ -130,9 +128,47 @@
                 if (pickStyle.endsWith(',')) {
                     pickStyle = pickStyle.slice(0, -1);
                 }
-                form_data += '&style='+pickStyle;
-                console.log("~~~~~~ : "+form_data);
-                s_ajax(form_data);
+                form_data += '&style=' + pickStyle;
+
+                $.ajax({
+                    url: "/insertPick",
+                    type: "POST",
+                    data: form_data,
+                    success: function(res) {
+                        alert("PICK이 등록되었습니다.");
+                        // 성공 시 사용자별 PICK 목록에 새로운 PICK 카드를 추가합니다.
+                        var pickCard = '<div class="row mb-2" id="pick' + res.pickCd + '">' +
+                            '<div class="col-xl-12 col-md-12">' +
+                            '<div class="card border-left-warning shadow h-100">' +
+                            '<div class="card-body">' +
+                            '<div class="row no-gutters align-items-center">' +
+                            '<div class="col mr-2" style="cursor: pointer;" onClick="showPick(\'' + res.pickCd + '\',\'' + res.pickNm + '\');">' +
+                            '<div class="text-xs font-weight-bold text-warning text-uppercase mb-1">' +
+                            res.sexNm + ', ' + res.style + ', 예산 ' + res.totalAmt + '원' +
+                            '</div>' +
+                            '<div class="h5 mb-0 font-weight-bold text-gray-800">' + res.pickNm + '</div>' +
+                            '</div>' +
+                            '<div class="col-auto" onClick="delPick(\'' + res.pickCd + '\',\'' + res.pickNm + '\');">' +
+                            '<a href="#" class="btn btn-danger btn-circle">' +
+                            '<i class="fas fa-trash"></i>' +
+                            '</a>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+
+                        $("#pickList").append(pickCard); // pickCard를 사용자별 PICK 목록에 추가
+
+                        $('#add-card-module').hide();
+                    },
+                    error: function(request, status, error) {
+                        alert("통신 실패.");
+                    }
+                });
+
+                return false;
             });
 
             $('.btn-2').click(function(){
@@ -191,21 +227,7 @@
              var bottomAmt = $("#bottom").val();
 
              sum2 = Number(topWearAmt) + Number(bottomAmt);
-             console.log(sum2);
              $("#totalSum").val(sum2);
-         }
-         function s_ajax(form_data) {
-              $.ajax({
-                 url: "/insertPick",
-                 type: "POST",
-                 data: form_data,
-                 success: function(data){
-                    alert("저장되었습니다.");
-                 },
-                 error: function (request, status, error){
-                    alert("저장에 실패하였습니다.");
-                 }
-             });
          }
 
      </script>
@@ -243,38 +265,39 @@
 
                                     <hr>
 
-                                    <!-- [S] 사용자별 PICK 목록 -->
-                                    <c:forEach var="pick" items="${pickDTOList}" varStatus="status">
-                                        <div class="row mb-2" id="pick${pick.pickCd}">
-                                            <div class="col-xl-12 col-md-12">
-                                                <c:if test="${status.index % 2 eq 0}">
-                                                    <div class="card border-left-warning shadow h-100">
-                                                </c:if>
-                                                <c:if test="${status.index % 2 eq 1}">
-                                                    <div class="card border-left-dark shadow h-100">
-                                                </c:if>
-                                                    <div class="card-body">
-                                                        <div class="row no-gutters align-items-center">
-                                                            <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.pickNm}');">
-                                                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                    ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
+                                    <div id="pickList">
+                                        <!-- [S] 사용자별 PICK 목록 -->
+                                        <c:forEach var="pick" items="${pickDTOList}" varStatus="status">
+                                            <div class="row mb-2" id="pick${pick.pickCd}">
+                                                <div class="col-xl-12 col-md-12">
+                                                    <c:if test="${status.index % 2 eq 0}">
+                                                        <div class="card border-left-warning shadow h-100">
+                                                    </c:if>
+                                                    <c:if test="${status.index % 2 eq 1}">
+                                                        <div class="card border-left-dark shadow h-100">
+                                                    </c:if>
+                                                        <div class="card-body">
+                                                            <div class="row no-gutters align-items-center">
+                                                                <div class="col mr-2" style="cursor: pointer;" onClick="showPick('${pick.pickCd}','${pick.pickNm}');">
+                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                                        ${pick.sexNm}, ${pick.style}, 예산 ${pick.totalAmt}원
+                                                                    </div>
+                                                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
                                                                 </div>
-                                                                <div class="h5 mb-0 font-weight-bold text-gray-800">${pick.pickNm}</div>
-                                                            </div>
-                                                            <div class="col-auto" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">
-                                                                <a href="#" class="btn btn-danger btn-circle">
-                                                                    <i class="fas fa-trash"></i>
-                                                                </a>
+                                                                <div class="col-auto" onClick="delPick('${pick.pickCd}','${pick.pickNm}');">
+                                                                    <a href="#" class="btn btn-danger btn-circle">
+                                                                        <i class="fas fa-trash"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </c:forEach>
+                                        </c:forEach>
+                                    </div>
 
                                     <!-- [E] 사용자별 PICK 목록 -->
-
                                     <div class="row">
                                         <div class="btn col-xl-12 col-md-12">
                                             <div class="card shadow h-100">
@@ -287,7 +310,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
@@ -319,25 +341,26 @@
                       <div>
                         <label style="display:inline-block; width:100px; text-align:center;" for="pickNm">Pick 명</label>  <input class="popup-input" style="width:250px;" type="text" name="pickNm" id="pickNm" /><br/>
                       </div>
-                      <div>
+                      <div style="margin-top:3px;">
                       <label style="display:inline-block; width:100px; text-align:center;" for="brand">선호브랜드</label>  <input class="popup-input" style="width:250px;" type="text" name="brand" id="brand" /><br/>
                       </div>
                   </div>
-                  <div>
-                      <h5 align="center" style="padding:10px;">항목별 예산설정</h5>
-                      <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblTop">상의</label>  <input class="popup-input" style="width:250px;" type="number" name="topWear" id="topWear" onkeyup="getTotalsSum();" /><br/>
-                      </div>
-                      <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input class="popup-input" style="width:250px;" type="number" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
-                      </div>
-                  <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" style="text-align:center; border:none;" disabled/> 원 </h5>
-                  <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
+                  <div style="margin-top:7px;">
+                    <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
                     <input style="width:20px;" type="radio" name="sex" id="men" value="0" text="남성" checked /> 남성
                     <input style="width:20px;" type="radio" name="sex" id="women" value="1" text="여성" /> 여성<br/>
                   </div>
                   <div>
-                  <h5 align="center" style="padding:10px;">선호 스타일 (*복수선택가능)</h5>
+                      <div>
+                      <h5 style="text-align:center; margin-top:20px;">예산설정</h5>
+                      <label style="display:inline-block; width:80px; text-align:center;" for="lblTop"></label><input class="popup-input" style="width:290px; margin-bottom:10px;" type="number" name="topWear" id="topWear" /> 원 <br/>
+                      </div>
+                      <div style = "display:none;">
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input class="popup-input" style="width:250px;" type="number" name="bottom" id="bottom" value="0"  /><br/>
+                  </div>
+                  </div>
+                  <div>
+                  <h5 align="center" style="padding:10px; margin-top:10px;">선호 스타일 (*복수선택가능)</h5>
 
                   <ul class="nav nav-pills">
                     <c:forEach var="style" items="${styleDTOList}" varStatus="status">
@@ -351,7 +374,7 @@
                </div>
               </div>
               <!--팝업 버튼 영역-->
-              <div class="popup_bottom" style="float: bottom; margin-top: 1%;">
+              <div class="popup_bottom" style="float: bottom; margin-top: 10%;">
                    <input type="submit" id="form_submit" value="저장하기" class="w-btn w-btn-outline w-btn-indigo" style="width:100%;">
                   </a>
               </div>

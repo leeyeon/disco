@@ -1,7 +1,7 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/disco
-    username: disco
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
     password: disco123
     platform: postgres
     driver-class-name: org.postgresql.Driver
