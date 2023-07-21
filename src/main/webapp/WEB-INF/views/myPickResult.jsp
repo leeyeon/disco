@@ -106,7 +106,7 @@
 
 <body>
 
-    <input type="hidden" id="recommendProductCnt" value="${fn:length(productDTOList)}" />
+    <input type="hidden" id="recommendProductCnt" />
 
     <div class="container">
         <!-- Outer Row  -->
@@ -128,7 +128,7 @@
                                     </div>
                                 </div>
                                 <div class="h1 text-gray-800 text-xs">
-                                    ${productDTOList[0].userId} 님의 스타일을 큐레이팅 한 결과입니다
+                                    이연희 님의 스타일을 큐레이팅 한 결과입니다
                                 </div>
                             </div>
                             <hr>
@@ -136,35 +136,7 @@
                                 <div class="col-xl-12 col-md-12">
                                     <div id="productCarousel" class="carousel slide" data-ride="carousel">
                                         <div class="carousel-inner">
-                                            <c:forEach var="product" items="${productDTOList}" varStatus="status">
-                                                <c:choose>
-                                                    <c:when test="${status.index % 2 eq 0}">
-                                                        <div class="carousel-item${status.index eq 0 ? ' active' : ''}">
-                                                            <div class="row">
-                                                    </c:when>
-                                                </c:choose>
-                                                <div class="col-xl-4 col-md-6 mb-2" id="product${product.productCd}">
-                                                    <div class="card border-left-warning shadow h-100">
-                                                        <div class="card-body">
-                                                            <div class="row no-gutters">
-                                                                <div class="col-4 mr-2" style="cursor: pointer;" onClick="showProduct('${product.productCd}','${product.productName}');">
-                                                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                                        #${product.division} <br>
-                                                                        #${product.brndNm} <br>
-                                                                        #${product.price}원
-                                                                    </div>
-                                                                    <div class="h4 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;"> ${product.productName} </div>
-                                                                </div>
-                                                                <div class="col-6 d-none d-md-block bg-login-image" style="height: 300px; background-size: contain;" id="productImage${product.productCd}" imageProduct="${product.productCd}"></div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <c:if test="${status.index % 2 eq 1 or status.last}">
-                                                    </div>
-                                                    </div>
-                                                </c:if>
-                                            </c:forEach>
+
                                         </div>
                                         <a class="carousel-control-prev" href="#productCarousel" role="button" data-slide="prev">
                                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -213,9 +185,12 @@
 
     <script>
         $(document).ready(function() {
-            setImage();
+
+            recommendRequest();
+            //setImage();
 
             makeMessageBlink();
+
         });
 
         function setImage() {
@@ -251,87 +226,91 @@
             }
         }
 
+        function recommendRequest() {
+            // 텍스트 메시지를 보여주고 로딩 바를 표시
+                 $("#loading-overlay").fadeIn();
+                 $("#loading-message").fadeIn();
+                 $("#loading-bar").fadeIn();
+
+                 var result = {
+                     "pickCd" : ${pickCd},
+                     "recommendProductCnt" : $("#recommendProductCnt").val()
+                 };
+
+                 $.ajax({
+                     type: "POST",
+                     url: "/openai/create-recommend-product",
+                     dataType: 'json',
+                     contentType: 'application/json',
+                     data: JSON.stringify(result),
+                     success: function (data) {
+                         // 데이터를 성공적으로 받아왔을 때 처리 로직
+                         if (data && data.length > 0) {
+                             // 새로운 상품 정보를 기존 상품 목록에 추가
+                             var newProductHtml = '';
+                             for (var i = 0; i < data.length; i += 2) {
+                                 newProductHtml += `
+                                     <div class="carousel-item active">
+                                         <div class="row">
+                                 `;
+                                 for (var j = i; j < i + 2 && j < data.length; j++) {
+                                     var product = data[j];
+                                     var title = '#'+product.division+' <br> #'+product.brndNm+' <br> #'+product.price+'원';
+
+                                     newProductHtml += '<div class="col-xl-4 col-md-6 mb-2" id="product'+product.productCd+'">'
+                                         + '<div class="card border-left-warning shadow h-100">'
+                                         + '       <div class="card-body">'
+                                         + '           <div class="row no-gutters">'
+                                         + '              <div class="col-4 mr-2" style="cursor: pointer;"'
+                                         + "onClick=\"showProduct('" + product.productCd + "','" + product.productName + "');\""
+                                         + '> <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">'+title;
+                                     newProductHtml += `     </div>
+                                                             <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">`+product.productName+`</div>
+                                                         </div>
+                                                         <div class="col-6 d-none d-md-block bg-login-image" style="height: 300px; background-size: contain;"`
+                                                    + 'id="productImage'+product.productCd+'" imageProduct="'+product.productCd+'"></div>';
+                                     newProductHtml += `
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     `;
+                                 }
+                                 newProductHtml += `
+                                         </div>
+                                     </div>
+                                 `;
+                             }
+
+                             $("#productCarousel .carousel-inner").append(newProductHtml);
+
+                             setImage(); // 더현대이미지 세팅
+
+                             // 기존 Carousel 갱신
+                             $("#productCarousel").carousel("next");
+
+                             var cnt = Number($("#recommendProductCnt").val()) + 2;
+
+                             $("#recommendProductCnt").val(cnt);
+
+                             // 로딩 바를 숨김
+                             $("#loading-overlay").fadeOut();
+                             $("#loading-message").fadeOut();
+                             $("#loading-bar").fadeOut();
+
+                         }
+                     },
+                     error: function (xhr, status, error) {
+                         // 요청 실패 시 처리
+                         console.log(xhr.responseText);
+                         alert("서버 요청에 실패했습니다");
+                     }
+            });
+        }
+
         function reProduct() {
             if (confirm("추가로 추천을 받아보시겠어요?")) {
-                // 텍스트 메시지를 보여주고 로딩 바를 표시
-                $("#loading-overlay").fadeIn();
-                $("#loading-message").fadeIn();
-                $("#loading-bar").fadeIn();
-
-                var result = {
-                    "pickCd" : ${pickCd},
-                    "recommendProductCnt" : $("#recommendProductCnt").val()
-                };
-
-                $.ajax({
-                    type: "POST",
-                    url: "/openai/create-recommend-product",
-                    dataType: 'json',
-                    contentType: 'application/json',
-                    data: JSON.stringify(result),
-                    success: function (data) {
-                        // 데이터를 성공적으로 받아왔을 때 처리 로직
-                        if (data && data.length > 0) {
-                            // 새로운 상품 정보를 기존 상품 목록에 추가
-                            var newProductHtml = '';
-                            for (var i = 0; i < data.length; i += 2) {
-                                newProductHtml += `
-                                    <div class="carousel-item">
-                                        <div class="row">
-                                `;
-                                for (var j = i; j < i + 2 && j < data.length; j++) {
-                                    var product = data[j];
-                                    var title = '#'+product.division+' <br> #'+product.brndNm+' <br> #'+product.price+'원';
-
-                                    newProductHtml += '<div class="col-xl-4 col-md-6 mb-2" id="product'+product.productCd+'">'
-                                        + '<div class="card border-left-warning shadow h-100">'
-                                        + '       <div class="card-body">'
-                                        + '           <div class="row no-gutters">'
-                                        + '              <div class="col-4 mr-2" style="cursor: pointer;"'
-                                        + "onClick=\"showProduct('" + product.productCd + "','" + product.productName + "');\""
-                                        + '> <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">'+title;
-                                    newProductHtml += `     </div>
-                                                            <div class="h5 mb-1 font-weight-bold text-gray-800" style="font-size: 18px;">`+product.productName+`</div>
-                                                        </div>
-                                                        <div class="col-6 d-none d-md-block bg-login-image" style="height: 300px; background-size: contain;"`
-                                                   + 'id="productImage'+product.productCd+'" imageProduct="'+product.productCd+'"></div>';
-                                    newProductHtml += `
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    `;
-                                }
-                                newProductHtml += `
-                                        </div>
-                                    </div>
-                                `;
-                            }
-
-                            $("#productCarousel .carousel-inner").append(newProductHtml);
-
-                            setImage(); // 더현대이미지 세팅
-
-                            // 기존 Carousel 갱신
-                            $("#productCarousel").carousel("next");
-
-                            var cnt = Number($("#recommendProductCnt").val()) + 2;
-
-                            $("#recommendProductCnt").val(cnt);
-
-                            // 로딩 바를 숨김
-                            $("#loading-overlay").fadeOut();
-                            $("#loading-message").fadeOut();
-                            $("#loading-bar").fadeOut();
-
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        // 요청 실패 시 처리
-                        console.log(xhr.responseText);
-                        alert("서버 요청에 실패했습니다");
-                    }
-                });
+                recommendRequest();
             } else {
                 alert("취소하였습니다");
             }

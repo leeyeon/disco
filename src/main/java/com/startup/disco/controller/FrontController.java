@@ -79,7 +79,7 @@ public class FrontController {
     public String myPickResult(Model model, @RequestParam(value = "pickCd", required = true) long pickCd) {
         PickDTO pickDTO = discoService.selectPick(pickCd);
 
-        List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO);
+        //List<ProductDTO> productDTOList = openAIApiDelegate.createRecommend(pickDTO);
 
         /*
         List<ProductDTO> productDTOList = List.of(
@@ -125,7 +125,7 @@ public class FrontController {
 
         */
         model.addAttribute("pickCd", pickCd);
-        model.addAttribute("productDTOList", productDTOList);
+        //model.addAttribute("productDTOList", productDTOList);
 
         return "myPickResult";
     }
