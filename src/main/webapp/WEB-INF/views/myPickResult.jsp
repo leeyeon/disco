@@ -255,7 +255,7 @@
                                  `;
                                  for (var j = i; j < i + 2 && j < data.length; j++) {
                                      var product = data[j];
-                                     var title = '#'+product.division+' <br> #'+product.brndNm+' <br> #'+product.price+'원';
+                                     var title = '#'+product.brndNm+' <br> #'+product.price+'원';
 
                                      newProductHtml += '<div class="col-xl-4 col-md-6 mb-2" id="product'+product.productCd+'">'
                                          + '<div class="card border-left-warning shadow h-100">'
