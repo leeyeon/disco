@@ -341,25 +341,26 @@
                       <div>
                         <label style="display:inline-block; width:100px; text-align:center;" for="pickNm">Pick 명</label>  <input class="popup-input" style="width:250px;" type="text" name="pickNm" id="pickNm" /><br/>
                       </div>
-                      <div>
+                      <div style="margin-top:3px;">
                       <label style="display:inline-block; width:100px; text-align:center;" for="brand">선호브랜드</label>  <input class="popup-input" style="width:250px;" type="text" name="brand" id="brand" /><br/>
                       </div>
                   </div>
-                  <div>
-                      <h5 align="center" style="padding:10px;">항목별 예산설정</h5>
-                      <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblTop">상의</label>  <input class="popup-input" style="width:250px;" type="number" name="topWear" id="topWear" onkeyup="getTotalsSum();" /><br/>
-                      </div>
-                      <div>
-                      <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input class="popup-input" style="width:250px;" type="number" name="bottom" id="bottom"  onkeyup="getTotalsSum();" /><br/>
-                      </div>
-                  <h5 align="center" style="padding:10px;"> 총 <input type="text" name="totalSum" id="totalSum" style="text-align:center; border:none;" disabled/> 원 </h5>
-                  <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
+                  <div style="margin-top:7px;">
+                    <label style="display:inline-block; width:100px; text-align:center;" for="age">성별</label>
                     <input style="width:20px;" type="radio" name="sex" id="men" value="0" text="남성" checked /> 남성
                     <input style="width:20px;" type="radio" name="sex" id="women" value="1" text="여성" /> 여성<br/>
                   </div>
                   <div>
-                  <h5 align="center" style="padding:10px;">선호 스타일 (*복수선택가능)</h5>
+                      <div>
+                      <h5 style="text-align:center; margin-top:20px;">예산설정</h5>
+                      <label style="display:inline-block; width:80px; text-align:center;" for="lblTop"></label><input class="popup-input" style="width:290px; margin-bottom:10px;" type="number" name="topWear" id="topWear" /> 원 <br/>
+                      </div>
+                      <div style = "display:none;">
+                      <label style="display:inline-block; width:100px; text-align:center;" for="lblBottom">하의</label>  <input class="popup-input" style="width:250px;" type="number" name="bottom" id="bottom" value="0"  /><br/>
+                  </div>
+                  </div>
+                  <div>
+                  <h5 align="center" style="padding:10px; margin-top:10px;">선호 스타일 (*복수선택가능)</h5>
 
                   <ul class="nav nav-pills">
                     <c:forEach var="style" items="${styleDTOList}" varStatus="status">
@@ -373,7 +374,7 @@
                </div>
               </div>
               <!--팝업 버튼 영역-->
-              <div class="popup_bottom" style="float: bottom; margin-top: 1%;">
+              <div class="popup_bottom" style="float: bottom; margin-top: 10%;">
                    <input type="submit" id="form_submit" value="저장하기" class="w-btn w-btn-outline w-btn-indigo" style="width:100%;">
                   </a>
               </div>
